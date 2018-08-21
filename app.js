@@ -1,117 +1,64 @@
-/*
-    NOTES
-    
-    My app settings https://apps.twitter.com/app/5573851/settings
-*/
-
-/* 
-    SETUP & DEPENDENCIES
-
-    https://gist.github.com/JuanJo4/e408d9349b403523aeb00f262900e768
-
-    Node.js, express, oauth example using Twitters API
-    
-    Install Dependencies:
-        npm install express
-        npm install oauth
-    
-    Create App File:
-        Save this file to app.js
-
-    Install dependenceis
-        npm install
-    
-    Start Server:
-        node app.js
-    
-    Navigate to the page:
-        Local host: http://127.0.0.1:8080
-        Remote host: http://yourserver.com:8080
-    
-*/
-
+var createError = require('http-errors');
 var express = require('express');
 var bodyParser = require('body-parser');
-var logger = require('express-logger');
+var path = require('path');
 var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 var session = require('express-session');
-var inspect = require('util-inspect');
+
 var oauth = require('oauth');
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var signInRouter = require('./routes/signin');
+
+inspect = require('util-inspect');
+app = express();
+
+//Twitter OAuth object
+
 const config = require('./config');
+const callbackString = "http://127.0.0.1:3000/signin/callback"
 
-var app = express();
-
-// Get your credentials here: https://dev.twitter.com/apps
 var _twitterConsumerKey = config.key;
 var _twitterConsumerSecret = config.secret;
 
 console.log(_twitterConsumerSecret)
 console.log(_twitterConsumerKey)
 
-var consumer = new oauth.OAuth(
+consumer = new oauth.OAuth(
     "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token", 
-    _twitterConsumerKey, _twitterConsumerSecret, "1.0A", "http://127.0.0.1:8080/sessions/callback", "HMAC-SHA1");
+    _twitterConsumerKey, _twitterConsumerSecret, "1.0A", callbackString, "HMAC-SHA1");
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(logger({ path: "log/express.log"}));
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: "very secret", resave: false, saveUninitialized: true}));
 
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/signin', signInRouter);
+
+// catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.locals.session = req.session;
-  next();
+  next(createError(404));
 });
 
-app.get('/sessions/connect', function(req, res){
-  consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
-    if (error) {
-      res.send("Error getting OAuth request token : " + inspect(error), 500);
-    } else {  
-      req.session.oauthRequestToken = oauthToken;
-      req.session.oauthRequestTokenSecret = oauthTokenSecret;
-      console.log("Double check on 2nd step");
-      console.log("------------------------");
-      console.log("<<"+req.session.oauthRequestToken);
-      console.log("<<"+req.session.oauthRequestTokenSecret);
-      res.redirect("https://twitter.com/oauth/authorize?oauth_token="+req.session.oauthRequestToken);      
-    }
-  });
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message; //https://expressjs.com/en/api.html#res.locals
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
-app.get('/sessions/callback', function(req, res){
-  console.log("------------------------");
-  console.log(">>"+req.session.oauthRequestToken);
-  console.log(">>"+req.session.oauthRequestTokenSecret);
-  console.log(">>"+req.query.oauth_verifier);
-  consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
-    if (error) {
-      res.send("Error getting OAuth access token : " + inspect(error) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(results) + "]", 500);
-    } else {
-      req.session.oauthAccessToken = oauthAccessToken;
-      req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
-      
-      res.redirect('/home');
-    }
-  });
-});
-
-app.get('/home', function(req, res){
-    consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
-      if (error) {
-        //console.log(error)
-        res.redirect('/sessions/connect');
-      } else {
-        var parsedData = JSON.parse(data);
-        res.send('You are signed in: ' + inspect(parsedData.screen_name));
-      } 
-    });
-});
-
-app.get('*', function(req, res){
-    res.redirect('/home');
-});
-
-app.listen(8080, function() {
-  console.log('App runining on port 8080!');
-});
+module.exports = app;
