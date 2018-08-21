@@ -4,7 +4,12 @@ var app = require('../app');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  
+	var followees = ["Bob", "Bobby", "Bobso"]
+
+  res.render('followees', { title: 'Your followees', followees: followees });
+
+  //res.render('index', { title: 'LessNoise');
 });
 
 module.exports = router;
