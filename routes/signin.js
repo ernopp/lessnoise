@@ -2,20 +2,28 @@ var express = require('express');
 var router = express.Router();
 var app = require('../app');
 
-router.get('/home', function(req, res){
+router.get('/home', function(req, res, next){
+  //TODO figure out encrypted cookie save of the access token
+  //TODO - move this into index.js top level route
     consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
       if (error) {
         //console.log(error)
         res.redirect('/signin/connect');
       } else {
         var parsedData = JSON.parse(data);
-        res.send('You are signed in: ' + inspect(parsedData.screen_name));
+        //res.send('You are signed in: ' + inspect(parsedData.screen_name) +'\n data is ' + parsedData);
+        var output = 'You are signed in: ' + inspect(parsedData.screen_name) +'\n data is ' + parsedData;
+        Console.log('You are signed in: ' + inspect(parsedData.screen_name) +'\n data is ' + parsedData);
       } 
-    });
+    },
+    next();      
+  },
+  function (req, res, next){
+    Console.log('2222');
+    res.send(output.concat("222222"))    
 });
 
 router.get('/connect', function(req, res){
-  // res.send(consumer)
   consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
     if (error) {
       res.send("Error getting OAuth request token : " + inspect(error), 500);
@@ -29,7 +37,6 @@ router.get('/connect', function(req, res){
       res.redirect("https://twitter.com/oauth/authorize?oauth_token="+req.session.oauthRequestToken);      
     }
   });
-  // res.send("here")
 });
 
 router.get('/callback', function(req, res){

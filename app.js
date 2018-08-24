@@ -12,11 +12,11 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signInRouter = require('./routes/signin');
 
+//Not declare them as new vars to make them accessible in routes/, not sure if right way of doing it (TODO)
 inspect = require('util-inspect');
 app = express();
 
-//Twitter OAuth object
-
+//Create Twitter OAuth object
 const config = require('./config');
 const callbackString = "http://127.0.0.1:3000/signin/callback"
 
@@ -30,7 +30,7 @@ consumer = new oauth.OAuth(
     "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token", 
     _twitterConsumerKey, _twitterConsumerSecret, "1.0A", callbackString, "HMAC-SHA1");
 
-// view engine setup
+// View engine Startup & Options
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -39,8 +39,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//TODO figure out belw line
 app.use(session({ secret: "very secret", resave: false, saveUninitialized: true}));
 
+//Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/signin', signInRouter);
