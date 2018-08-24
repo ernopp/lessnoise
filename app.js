@@ -37,9 +37,13 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
+
+// Passing a built-in function - express.static - to handle static files. https://expressjs.com/en/4x/api.html#express.static
 app.use(express.static(path.join(__dirname, 'public')));
-//TODO figure out belw line
+
+// https://nodewebapps.com/2017/06/18/how-do-nodejs-sessions-work/
 app.use(session({ secret: "very secret", resave: false, saveUninitialized: true}));
 
 //Routes
