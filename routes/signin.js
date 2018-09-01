@@ -5,11 +5,20 @@ var app = require('../app');
 router.get('/home', function(req, res){
     consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
       if (error) {
-        //console.log(error)
+        console.log("error verifying creds: "+error);
         res.redirect('/signin/connect');
-      } else {
-        var parsedData = JSON.parse(data);
-        res.send('You are signed in: ' + inspect(parsedData.screen_name));
+      } else {        
+        var verifyCredentialsData = JSON.parse(data);
+        // var screenName = parsedData.screen_name;
+        consumer.get("https://api.twitter.com/1.1/friends/list.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response){
+          if(error) {
+            res.send("Error getting friends")
+          }
+          else{            
+            var getFriendsListData = JSON.parse(data);
+            res.send({verifyCredentialsData, getFriendsListData},200); 
+          }
+        });
       } 
     });
 });
@@ -22,8 +31,10 @@ router.get('/connect', function(req, res){
     } else {  
       req.session.oauthRequestToken = oauthToken;
       req.session.oauthRequestTokenSecret = oauthTokenSecret;
+      req.session.save();
       console.log("Double check on 2nd step");
       console.log("------------------------");
+      console.log("Session id is: " + req.sessionID);
       console.log("<<"+req.session.oauthRequestToken);
       console.log("<<"+req.session.oauthRequestTokenSecret);
       res.redirect("https://twitter.com/oauth/authorize?oauth_token="+req.session.oauthRequestToken);      
@@ -34,6 +45,7 @@ router.get('/connect', function(req, res){
 
 router.get('/callback', function(req, res){
   console.log("------------------------");
+  console.log("Session id is: " + req.sessionID);
   console.log(">>"+req.session.oauthRequestToken);
   console.log(">>"+req.session.oauthRequestTokenSecret);
   console.log(">>"+req.query.oauth_verifier);
