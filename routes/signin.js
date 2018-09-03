@@ -14,9 +14,13 @@ router.get('/home', function(req, res){
           if(error) {
             res.send("Error getting friends")
           }
-          else{            
-            var getFriendsListData = JSON.parse(data);
-            res.send({verifyCredentialsData, getFriendsListData},200); 
+          else{                      
+            // var rawFriendsList = JSON.parse(data);
+            // rawFriendsList.sort(function(a,b){
+            //   return a.statusescount > b.statusescount;
+            // });            
+
+            res.send({verifyCredentialsData, rawFriendsList},200); 
           }
         });
       } 
@@ -31,7 +35,7 @@ router.get('/connect', function(req, res){
     } else {  
       req.session.oauthRequestToken = oauthToken;
       req.session.oauthRequestTokenSecret = oauthTokenSecret;
-      req.session.save();
+      // req.session.save();
       console.log("Double check on 2nd step");
       console.log("------------------------");
       console.log("Session id is: " + req.sessionID);
@@ -50,6 +54,7 @@ router.get('/callback', function(req, res){
   console.log(">>"+req.session.oauthRequestTokenSecret);
   console.log(">>"+req.query.oauth_verifier);
   consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
+    //consumer.getOAuthAccessToken(req.query.oauthRequestToken, req.query.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
     if (error) {
       res.send("Error getting OAuth access token : " + inspect(error) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(results) + "]", 500);
     } else {

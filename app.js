@@ -1,10 +1,14 @@
+/* Twitter app settings: https://apps.twitter.com/app/5573851/settings */
+
 var createError = require('http-errors');
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
 var session = require('express-session');
+// var session = require('cookie-session');
 
 var oauth = require('oauth');
 
@@ -18,7 +22,7 @@ app = express();
 
 //Create Twitter OAuth object
 const config = require('./config');
-const callbackString = "http://127.0.0.1:3000/signin/callback"
+const callbackString = "http://localhost:3000/signin/callback"
 
 var _twitterConsumerKey = config.key;
 var _twitterConsumerSecret = config.secret;
@@ -38,13 +42,19 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(cookieParser());
-
 // Passing a built-in function - express.static - to handle static files. https://expressjs.com/en/4x/api.html#express.static
 app.use(express.static(path.join(__dirname, 'public')));
 
 // https://nodewebapps.com/2017/06/18/how-do-nodejs-sessions-work/
-app.use(session({ secret: "very secret", resave: false, saveUninitialized: true}));
+app.use(session({ secret: "very secret", resave: false, saveUninitialized: true, cookie: { secure: true }}));
+
+// app.use(session({
+//   name: 'session',
+//   keys: ["secret1", "secret2"],
+//   secure : false,
+//   // Cookie Options
+//   maxAge: 24 * 60 * 60 * 1000 // 24 hours
+// }));
 
 //Routes
 app.use('/', indexRouter);
