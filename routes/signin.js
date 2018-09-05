@@ -18,7 +18,8 @@ router.get('/home', function(req, res){
             // var rawFriendsList = JSON.parse(data);
             // rawFriendsList.sort(function(a,b){
             //   return a.statusescount > b.statusescount;
-            // });            
+            // });
+            saveFriendList(rawFriendsList);
 
             res.send({verifyCredentialsData, rawFriendsList},200); 
           }
