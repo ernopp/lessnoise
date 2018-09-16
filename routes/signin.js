@@ -15,13 +15,13 @@ router.get('/home', function(req, res){
             res.send("Error getting friends")
           }
           else{                      
-            // var rawFriendsList = JSON.parse(data);
+            var rawFriendsList = JSON.parse(data);
             // rawFriendsList.sort(function(a,b){
-            //   return a.statusescount > b.statusescount;
+            //    return a.statusescount > b.statusescount;
             // });
-            saveFriendList(rawFriendsList);
+            //saveFriendList(rawFriendsList);
 
-            res.send({verifyCredentialsData, rawFriendsList},200); 
+            res.send(rawFriendsList,200); 
           }
         });
       } 
