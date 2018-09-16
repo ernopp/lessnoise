@@ -46,15 +46,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // https://nodewebapps.com/2017/06/18/how-do-nodejs-sessions-work/
 app.use(session({ secret: "very secret" }))
-//app.use(session({ secret: "very secret", resave: false, saveUninitialized: true, cookie: { secure: true }}));
-
-// app.use(session({
-//   name: 'session',
-//   keys: ["secret1", "secret2"],
-//   secure : false,
-//   // Cookie Options
-//   maxAge: 24 * 60 * 60 * 1000 // 24 hours
-// }));
 
 //Routes
 app.use('/', indexRouter)

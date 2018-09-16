@@ -8,22 +8,26 @@ router.get('/home', function(req, res){
         console.log("error verifying creds: "+error);
         res.redirect('/signin/connect');
       } else {        
+        
         var verifyCredentialsData = JSON.parse(data);
-        // var screenName = parsedData.screen_name;
-        consumer.get("https://api.twitter.com/1.1/friends/list.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response){
-          if(error) {
-            res.send("Error getting friends")
-          }
-          else{                      
-            var rawFriendsList = JSON.parse(data);
-            // rawFriendsList.sort(function(a,b){
-            //    return a.statusescount > b.statusescount;
-            // });
-            //saveFriendList(rawFriendsList);
+        var twitterIdentifier = {};
+        twitterIdentifier["id"] = verifyCredentialsData["id"];
+        twitterIdentifier["name"] = verifyCredentialsData["name"];
+        twitterIdentifier["screen_name"] = verifyCredentialsData["screen_name"];
 
-            res.send(rawFriendsList,200); 
-          }
-        });
+        
+
+        // consumer.get("https://api.twitter.com/1.1/friends/list.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response){
+        //   if(error) {
+        //     res.send("Error getting friends")
+        //   }
+        //   else{                      
+        //     var rawFriendsList = JSON.parse(data);            
+        //     res.send(rawFriendsList,200); 
+        //   }
+        // });
+
+        res.send(twitterIdentifier,200)
       } 
     });
 });
