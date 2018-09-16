@@ -33,6 +33,20 @@ consumer = new oauth.OAuth(
   "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token",
   _twitterConsumerKey, _twitterConsumerSecret, "1.0A", callbackString, "HMAC-SHA1")
 
+
+//Mongo
+MongoClient = require('mongodb').MongoClient;
+url = 'mongodb://localhost/lessnoise'
+
+MongoClient.connect(url, { useNewUrlParser: true }, function(err, db){
+  if(err){
+  	throw err;
+  }
+  console.log("Connected");      
+
+  dbo = db.db("lessnoise");
+});
+
 // View engine Startup & Options
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
