@@ -1,52 +1,9 @@
+//Routes oauth flow connect and callback
+
 var express = require('express');
 var router = express.Router();
 var app = require('../app');
 var utils = require('../utils');
-
-router.get('/home', function(req, res){
-
-    consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
-      if (error) {
-        console.log("error verifying creds: "+error);
-        res.redirect('/signin/connect');
-      } else {        
-        console.log("verifycredentials data: " , data);
-
-        if (!utils.IsJsonString(data))
-          throw "Error - received creds data not a valid json !"
-        //save the logged in user's info in twitterIdentifier json object. used later to identify their friends in the database
-        var verifyCredentialsData = JSON.parse(data);
-        var twitterIdentifier = {};
-        twitterIdentifier["id"] = verifyCredentialsData["id"];
-        twitterIdentifier["name"] = verifyCredentialsData["name"];
-        twitterIdentifier["screen_name"] = verifyCredentialsData["screen_name"];
-
-        //get friends list 
-        consumer.get("https://api.twitter.com/1.1/friends/list.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response){
-          if(error) {
-            res.send("Error getting friends")
-          }
-          else{                  
-            // console.log("successfully got friends ")
-            // console.log("------data---------")
-            // console.log(data)
-            console.log("-------data.users--------")
-            console.log(JSON.parse(data)["users"])
-            var rawFriendsList = JSON.parse(data)["users"];            
-            var transformedFriendsList = utils.transformFriendsList(rawFriendsList);
-
-            dbo.collection("users").insertMany(transformedFriendsList, function(err, res) {
-              if (err) throw err;
-              console.log("Number of documents inserted: " + res.insertedCount);
-              dbo.close();
-            });
-
-            res.send(rawFriendsList,200); 
-          }
-        }); // consumer.get friends list         
-    }// else
-  });
-}); //router.get
 
 router.get('/connect', function(req, res){
   // res.send(consumer)
@@ -82,7 +39,7 @@ router.get('/callback', function(req, res){
       req.session.oauthAccessToken = oauthAccessToken;
       req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
       
-      res.redirect('/signin/home');
+      res.redirect('/');
     }
   });
 });

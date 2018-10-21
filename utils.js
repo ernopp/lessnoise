@@ -1,18 +1,22 @@
 //utils to deal with friends lists jsons 
 
-var pti = function printTransformedItems(items){
+var gpi = function getPrettyFriendsList(items){
   var interestingKeys = ["id", "screen_name", "statuses_count", "ln_days_with_account", "ln_average_statuses_per_day"]
-  // "ln_id", "ln_name", "ln_screen_name", 
+  var prettyItemsList = [];
 
   items.forEach(function(item, index){
+    var prettyItem = {};
     // console.log(item)
     interestingKeys.forEach(function(obj, index){
-        console.log(obj, item[obj]);
-      });
-    console.log("--------------------------")
+        prettyItem[obj]=item[obj];
+      });    
+    prettyItemsList.push(prettyItem);
     });
+
+  return prettyItemsList;
 };
 
+//takes raw list returned by twitter api and adds lessnoise user info + activity info of each friend returned
 var tf = function transformFriendsList(rawFriendsList){
   var transformedFriendsList = [];
 
@@ -38,7 +42,7 @@ var tf = function transformFriendsList(rawFriendsList){
     transformedFriendsList.push(transformedItem)
     
   });
-  pti(transformedFriendsList);
+  // pti(transformedFriendsList);
   return transformedFriendsList;
 };
 
@@ -52,4 +56,4 @@ var isj = function IsJsonString(str) {
     return true;
 }
 
-module.exports  = {transformFriendsList: tf, printTransformedItems: pti, IsJsonString: isj};
+module.exports  = {transformFriendsList: tf, getPrettyFriendsList: gpi, IsJsonString: isj};

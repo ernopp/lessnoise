@@ -12,7 +12,6 @@ var session = require('express-session')
 var oauth = require('oauth')
 
 var indexRouter = require('./routes/index')
-var usersRouter = require('./routes/users')
 var signInRouter = require('./routes/signin')
 
 //Not declare them as new vars to make them accessible in routes/, not sure if right way of doing it (TODO)
@@ -35,17 +34,17 @@ consumer = new oauth.OAuth(
 
 
 //Mongo
-MongoClient = require('mongodb').MongoClient;
-url = 'mongodb://localhost/lessnoise'
+// MongoClient = require('mongodb').MongoClient;
+// url = 'mongodb://localhost/lessnoise'
 
-MongoClient.connect(url, { useNewUrlParser: true }, function(err, db){
-  if(err){
-  	throw err;
-  }
-  console.log("Connected");      
+// MongoClient.connect(url, { useNewUrlParser: true }, function(err, db){
+//   if(err){
+//   	throw err;
+//   }
+//   console.log("Connected");      
 
-  dbo = db.db("lessnoise");
-});
+//   dbo = db.db("lessnoise");
+// });
 
 // View engine Startup & Options
 app.set('views', path.join(__dirname, 'views'))
@@ -63,7 +62,6 @@ app.use(session({ secret: "very secret" }))
 
 //Routes
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
 app.use('/signin', signInRouter)
 
 // catch 404 and forward to error handler
