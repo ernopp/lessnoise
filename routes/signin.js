@@ -1,9 +1,10 @@
 //Routes oauth flow connect and callback
 
-var express = require('express');
-var router = express.Router();
-var app = require('../app');
-var utils = require('../utils');
+const consumer = require('../twitter-client');
+const express = require('express');
+const router = express.Router();
+const app = require('../app');
+const utils = require('../utils');
 
 router.get('/connect', function(req, res){
   // res.send(consumer)

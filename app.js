@@ -14,6 +14,8 @@ var oauth = require('oauth')
 var indexRouter = require('./routes/index')
 var signInRouter = require('./routes/signin')
 
+const consumer = require('./twitter-client')
+
 //Not declare them as new vars to make them accessible in routes/, not sure if right way of doing it (TODO)
 inspect = require('util-inspect')
 app = express()
@@ -22,15 +24,15 @@ app = express()
 const config = require('./config')
 const callbackString = "http://localhost:3000/signin/callback"
 
-var _twitterConsumerKey = config.key
-var _twitterConsumerSecret = config.secret
-
-console.log(_twitterConsumerSecret)
-console.log(_twitterConsumerKey)
-
-consumer = new oauth.OAuth(
-  "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token",
-  _twitterConsumerKey, _twitterConsumerSecret, "1.0A", callbackString, "HMAC-SHA1")
+// var _twitterConsumerKey = config.key
+// var _twitterConsumerSecret = config.secret
+//
+// console.log(_twitterConsumerSecret)
+// console.log(_twitterConsumerKey)
+//
+// global.consumer = new oauth.OAuth(
+//   "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token",
+//   _twitterConsumerKey, _twitterConsumerSecret, "1.0A", callbackString, "HMAC-SHA1")
 
 
 //Mongo
