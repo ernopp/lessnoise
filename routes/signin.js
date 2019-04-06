@@ -15,7 +15,7 @@ router.get('/connect', function(req, res){
       req.session.oauthRequestToken = oauthToken;
       req.session.oauthRequestTokenSecret = oauthTokenSecret;
       // req.session.save();
-      console.log("Double check on 2nd step");
+      console.log("Calling out to twitter for first oauth");
       console.log("------------------------");
       console.log("Session id is: " + req.sessionID);
       console.log("<<"+req.session.oauthRequestToken);
@@ -27,11 +27,12 @@ router.get('/connect', function(req, res){
 });
 
 router.get('/callback', function(req, res){
+    console.log("Executing callback");
   console.log("------------------------");
   console.log("Session id is: " + req.sessionID);
-  console.log(">>"+req.session.oauthRequestToken);
-  console.log(">>"+req.session.oauthRequestTokenSecret);
-  console.log(">>"+req.query.oauth_verifier);
+  console.log("token>>"+req.session.oauthRequestToken);
+  console.log("secret>>"+req.session.oauthRequestTokenSecret);
+  console.log("oauth_verifier>>"+req.query.oauth_verifier);
   consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
     //consumer.getOAuthAccessToken(req.query.oauthRequestToken, req.query.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
     if (error) {
