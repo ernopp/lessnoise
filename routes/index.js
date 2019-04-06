@@ -6,7 +6,7 @@ const utils = require('../utils')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
+    consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, async function (error, data, response) {
         if (error) {
             console.log("error verifying creds trying to connect: ", JSON.stringify(error))
             res.redirect('/signin/connect')
@@ -28,33 +28,34 @@ router.get('/', function (req, res, next) {
             let nextcursor = -1
             const rawFriendsList = []
 
+            while (nextcursor !== 0) {
+                console.log("-----nextcursor is ", nextcursor)
+                try {
+                    const twitterResponse = await getFriends(
+                        nextcursor,
+                        req.session.oauthAccessToken,
+                        req.session.oauthAccessTokenSecret
+                    );
+                    nextcursor = twitterResponse.next_cursor;
 
-            // res.send("out")
+                    for (var i = 0; i < twitterResponse.users.length; i++) {
+                        console.log("adding friend " + twitterResponse.users[i])
+                        rawFriendsList.push(twitterResponse.users[i]);
+                    }
+                } catch (err) {
+                    return next(err);
+                }
+            }
 
-            // consumer.get(
-            //     "https://api.twitter.com/1.1/friends/list.json?cursor=-1",
+            // getFriends(
+            //     nextcursor,
             //     req.session.oauthAccessToken,
-            //     req.session.oauthAccessTokenSecret,
-            //     function (error, data) {
-            //         if (error) {
-            //             const e = JSON.stringify(error)
-            //             console.log("Error getting friends, error: ", e)
-            //             // return reject(error);
-            //         } else {
-            //             console.log("-------------GOT DATA BACK --------, number of objects: ", data["total_count"])
-            //             console.log(data)
-            //         }
-            //     }
+            //     req.session.oauthAccessTokenSecret
             // );
 
+            console.log("-----Finished cursoring-----")
 
-            getFriends(
-                nextcursor,
-                req.session.oauthAccessToken,
-                req.session.oauthAccessTokenSecret
-            );
-
-            console.log(rawFriendsList);
+            console.log("rawFriendsList has size : " , rawFriendsList.length);
 
             // var transformedFriendsList = utils.transformFriendsList(rawFriendsList);
             // var prettyFriendsList = utils.getPrettyFriendsList(transformedFriendsList);
@@ -77,38 +78,40 @@ router.get('/', function (req, res, next) {
             // https://expressjs.com/en/api.html#res.render
             // res.render('index', {title: 'LessNoise', prettyFriendsList: prettyFriendsList});
         }
-    }) // consumer.get friends list
+    })
 })
 
 function getFriends(cursor, oauthAccessToken, oauthAccessTokenSecret) {
-    //return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
 
-    console.log("-----making getfriends call with----")
-    console.log(" access token: ", oauthAccessToken)
-    console.log(" secret : ", oauthAccessTokenSecret)
+    // console.log("-----making getfriends call with----")
+    // console.log(" access token: ", oauthAccessToken)
+    // console.log(" secret : ", oauthAccessTokenSecret)
 
     consumer.get(
-        "https://api.twitter.com/1.1/friends/list.json",
+        "https://api.twitter.com/1.1/friends/list.json?cursor=" + cursor,
         oauthAccessToken,
         oauthAccessTokenSecret,
         function (error, data) {
             if (error) {
                 const e = JSON.stringify(error)
-                console.log("Error getting friends, error: ", e)
-                // return reject(error);
+                console.log("Error getting friends, cursor is: " + cursor + " error: " + e)
+                return reject(error);
             } else {
                 console.log("-------------GOT DATA BACK --------, number of objects: ", data["total_count"])
                 console.log(data)
-                // nextcursorstr = data["next_cursor_str"]
-                // nextcursor = data["next_cursor"]
+                nextcursorstr = data["next_cursor_str"]
+                nextcursor = data["next_cursor"]
 
-                // return resolve(data);
+                // console.log("retrieved " + data.users.length + "friends ")
+
+                return resolve(data);
 
                 // rawFriendsList = rawFriendsList.concact(JSON.parse(data)["users"])
                 // console.log(JSON.stringify(rawFriendsList))
             }
         })
-    //})
+    })
 }
 
 module.exports = router
