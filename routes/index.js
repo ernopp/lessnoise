@@ -36,9 +36,9 @@ router.get('/', function (req, res, next) {
                         req.session.oauthAccessToken,
                         req.session.oauthAccessTokenSecret
                     );
-                    nextcursor = twitterResponse.next_cursor;
+                    nextcursor = twitterResponse["next_cursor"];
 
-                    for (var i = 0; i < twitterResponse.users.length; i++) {
+                    for (let i = 0; i < twitterResponse["users"].length; i++) {
                         console.log("adding friend " + twitterResponse.users[i])
                         rawFriendsList.push(twitterResponse.users[i]);
                     }
@@ -92,14 +92,15 @@ function getFriends(cursor, oauthAccessToken, oauthAccessTokenSecret) {
         "https://api.twitter.com/1.1/friends/list.json?cursor=" + cursor,
         oauthAccessToken,
         oauthAccessTokenSecret,
-        function (error, data) {
+        function (error, d) {
+            let data = JSON.parse(d);
             if (error) {
                 const e = JSON.stringify(error)
                 console.log("Error getting friends, cursor is: " + cursor + " error: " + e)
                 return reject(error);
             } else {
                 console.log("-------------GOT DATA BACK --------, number of objects: ", data["total_count"])
-                console.log(data)
+                // console.log(data)
                 nextcursorstr = data["next_cursor_str"]
                 nextcursor = data["next_cursor"]
 
