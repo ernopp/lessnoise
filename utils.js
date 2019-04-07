@@ -1,19 +1,25 @@
 //utils to deal with friends lists jsons 
 
-var gpi = function getPrettyFriendsList(items){
-  var interestingKeys = ["id", "screen_name", "statuses_count", "ln_days_with_account", "ln_average_statuses_per_day"]
+var gpi = function getPrettyFriendsListAndInterestingKeys(items){
+  var interestingKeys = ["screen_name", "name", "statuses_count", "ln_days_with_account", "ln_average_statuses_per_day"]
   var prettyItemsList = [];
 
   items.forEach(function(item, index){
     var prettyItem = {};
-    // console.log(item)
+
+    item["ln_average_statuses_per_day"] = parseFloat(item["ln_average_statuses_per_day"]).toFixed(2);
+    item["ln_days_with_account"] = parseFloat(item["ln_days_with_account"]).toFixed(0);
+
     interestingKeys.forEach(function(obj, index){
         prettyItem[obj]=item[obj];
       });    
     prettyItemsList.push(prettyItem);
     });
 
-  return prettyItemsList;
+  return {
+    "interesting_keys": interestingKeys,
+    "friends": prettyItemsList
+  };
 };
 
 //takes raw list returned by twitter api and adds lessnoise user info + activity info of each friend returned

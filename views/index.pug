@@ -2,11 +2,13 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Here are your unfollow recommendations:
 
-  ul
-    each val in prettyFriendsList    
-      li=val['screen_name']
-        ul 
-          each v in val
-            li=v
+  table.table
+    tr
+      each val in prettyFriendsList["interesting_keys"]
+        th=val
+    each val in prettyFriendsList["friends"]
+      tr
+        each v in val
+            td=v
