@@ -1,3 +1,5 @@
+/* Twitter client - app settings: https://apps.twitter.com/app/5573851/settings */
+
 const config = require('./config')
 const oauth = require('oauth')
 

@@ -5,4 +5,4 @@ const config = {
  secret: process.env.SECRET
 };
 
-module.exports = config;
+module.exports = config

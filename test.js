@@ -1,5 +1,5 @@
-let fs = require('fs');
-let MongoClient = require('mongodb').MongoClient;
+let fs = require('fs')
+let MongoClient = require('mongodb').MongoClient
 let  url = 'mongodb://localhost/lessnoise'
 
 let utils = require('./utils');

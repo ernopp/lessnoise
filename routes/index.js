@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const app = require('../app')
 const utils = require('../utils')
-const test = require('../test');
+const test = require('../test')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -13,35 +13,30 @@ router.get('/', function (req, res, next) {
             res.redirect('/signin/connect')
         } else {
 
-            //save the logged in user's info in twitterIdentifier json object. used later to identify their friends in the database
-            var verifyCredentialsData = JSON.parse(data)
-            var twitterIdentifier = {}
-            twitterIdentifier["id"] = verifyCredentialsData["id"]
-            twitterIdentifier["name"] = verifyCredentialsData["name"]
-            twitterIdentifier["screen_name"] = verifyCredentialsData["screen_name"]
+            let loggedInUser = utils.getLoggedInUser(data)
 
             console.log("----Successfully verified creds----")
-            console.log("Twitter user identified  is: " + JSON.stringify((twitterIdentifier)))
+            console.log("Twitter user identified  is: " + JSON.stringify((loggedInUser["twitterIdentifier"])))
 
-            // let rawFriendsList = getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret);
+            // let rawFriendsList = getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
 
-            let prettyFriendsList = await test.getTestFriends();
+            let prettyFriendsList = await test.getTestFriends()
 
             console.log("prettyFriendsList  : " + prettyFriendsList)
 
-            // var transformedFriendsList = utils.transformFriendsList(rawFriendsList);
-            // var prettyFriendsList = utils.getPrettyFriendsListAndInterestingKeys(transformedFriendsList);
-            //   console.log(prettyFriendsList);
+            // var transformedFriendsList = utils.transformFriendsList(rawFriendsList)
+            // var prettyFriendsList = utils.getPrettyFriendsListAndInterestingKeys(transformedFriendsList)
+            //   console.log(prettyFriendsList)
 
             // save to mongodb
             // dbo.collection("users").insertMany(transformedFriendsList, function(err, res) {
-            //   if (err) throw err;
-            //   console.log("Number of documents inserted: " + res.insertedCount);
-            //   dbo.close();
-            // });
+            //   if (err) throw err
+            //   console.log("Number of documents inserted: " + res.insertedCount)
+            //   dbo.close()
+            // })
 
             // https://expressjs.com/en/api.html#res.render
-            res.render('index', {title: 'LessNoise', prettyFriendsList: prettyFriendsList});
+            res.render('index', {title: 'LessNoise', prettyFriendsList: prettyFriendsList})
         }
     })
 })
@@ -60,23 +55,23 @@ async function getFriends(accesstoken, accesstokensecret){
                 nextcursor,
                 accesstoken,
                 accesstokensecret
-            );
-            nextcursor = twitterResponse["next_cursor"];
+            )
+            nextcursor = twitterResponse["next_cursor"]
 
             for (let i = 0; i < twitterResponse["users"].length; i++) {
                 console.log("adding friend " + twitterResponse["users"][i]["screen_name"])
-                rawFriendsList.push(twitterResponse.users[i]);
+                rawFriendsList.push(twitterResponse.users[i])
             }
         } catch (err) {
-            return next(err);
+            return next(err)
         }
     }
 
     console.log("-----Finished cursoring-----")
 
-    console.log("rawFriendsList has size : " , rawFriendsList.length);
+    console.log("rawFriendsList has size : " , rawFriendsList.length)
 
-    return rawFriendsList;
+    return rawFriendsList
 }
 
 function makeFriendsListCall(cursor, oauthAccessToken, oauthAccessTokenSecret) {
@@ -87,11 +82,11 @@ function makeFriendsListCall(cursor, oauthAccessToken, oauthAccessTokenSecret) {
         oauthAccessToken,
         oauthAccessTokenSecret,
         function (error, d) {
-            let data = JSON.parse(d);
+            let data = JSON.parse(d)
             if (error) {
                 const e = JSON.stringify(error)
                 console.log("Error getting friends, cursor is: " + cursor + " error: " + e)
-                return reject(error);
+                return reject(error)
             } else {
                 console.log("-------------GOT DATA BACK --------, number of objects: ", data["users"].length)
                 // console.log(data)
@@ -100,7 +95,7 @@ function makeFriendsListCall(cursor, oauthAccessToken, oauthAccessTokenSecret) {
 
                 // console.log("retrieved " + data.users.length + "friends ")
 
-                return resolve(data);
+                return resolve(data)
 
                 // rawFriendsList = rawFriendsList.concact(JSON.parse(data)["users"])
                 // console.log(JSON.stringify(rawFriendsList))
