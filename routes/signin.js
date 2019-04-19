@@ -6,7 +6,7 @@ const router = express.Router();
 const app = require('../app');
 const utils = require('../utils');
 
-router.get('/connect', function(req, res){
+router.get('/', function(req, res){
   // res.send(consumer)
   consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
     if (error) {
