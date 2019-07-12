@@ -14,10 +14,8 @@ var tf = async function getTestFriends(){
                 return reject(error);
             }
 
-            // console.log(data.toString("utf-8"))
-
             let rawFriendsList = JSON.parse(data)["users"];
-            let transformedFriendsList = utils.transformFriendsList(rawFriendsList);
+            let transformedFriendsList = utils.augmentFriendsList(rawFriendsList);
 
             let prettyFriendsList = utils.getPrettyFriendsList(transformedFriendsList);
 

@@ -1,8 +1,9 @@
 //utils to deal with friends lists jsons 
 
-const gpi = function getPrettyFriendsListAndInterestingKeys(items) {
-    var interestingKeys = ["screen_name", "name", "statuses_count", "ln_days_with_account", "ln_average_statuses_per_day"]
-    var prettyItemsList = []
+const gpi = function getPrettyFriendsList(items) {
+    const interestingKeys = ["screen_name", "name", "statuses_count", "ln_days_with_account", "ln_average_statuses_per_day"]
+    const interestingKeysTitles = ["Twitter handle", "Name", "Tweet count", "Days since account creation", "Average tweets per day"]
+    let prettyItemsList = []
 
     items.forEach(function (item, index) {
         var prettyItem = {}
@@ -13,17 +14,22 @@ const gpi = function getPrettyFriendsListAndInterestingKeys(items) {
         interestingKeys.forEach(function (obj, index) {
             prettyItem[obj] = item[obj]
         })
+
         prettyItemsList.push(prettyItem)
     })
 
     return {
         "interesting_keys": interestingKeys,
-        "friends": prettyItemsList
+        "interesting_keys_titles": interestingKeysTitles,
+        "friends": prettyItemsList.sort(function(a, b){
+                return -1 * (a.ln_average_statuses_per_day - b.ln_average_statuses_per_day)
+            }
+        )
     }
 }
 
 //takes raw list returned by twitter api and adds lessnoise user info + activity info of each friend returned
-const tf = function transformFriendsList(rawFriendsList) {
+const tf = function augmentFriendsList(rawFriendsList) {
     var transformedFriendsList = []
 
     rawFriendsList.forEach(function (item, index, array) {
@@ -62,7 +68,9 @@ const gliu = function getLoggedInUser(data){
         screen_name: verifyCredentialsData["screen_name"]
     }
 
-    return loggedInUser;
+    console.log("loggedInUser is " + JSON.stringify(loggedInUser))
+
+    return loggedInUser
 }
 
 const isj = function IsJsonString(str) {
@@ -75,4 +83,4 @@ const isj = function IsJsonString(str) {
     return true
 }
 
-module.exports  = {transformFriendsList: tf, getPrettyFriendsList: gpi, getLoggedInUser: gliu};
+module.exports  = {augmentFriendsList: tf, getPrettyFriendsList: gpi, getLoggedInUser: gliu};

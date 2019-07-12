@@ -2,13 +2,27 @@ extends layout
 
 block content
   h1= title
+  p Thanks for signing in @#{loggedInUser["screen_name"]}
   p Here are your unfollow recommendations:
+
+  p You are seeing everyone* you follow sorted by the noisiest** first
+
+  p
+
+  // https://api.twitter.com/1.1/friendships/destroy.json
 
   table.table
     tr
-      each val in prettyFriendsList["interesting_keys"]
+      each val in prettyFriendsList["interesting_keys_titles"]
         th=val
+      th=link
     each val in prettyFriendsList["friends"]
       tr
         each v in val
             td=v
+        td="twitter.com/"+val["screen_name"]
+
+  //<a href="https://twitter.com/EricaJoy?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @EricaJoy</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  div * capped at 3000
+  div ** Average tweets per day, descending

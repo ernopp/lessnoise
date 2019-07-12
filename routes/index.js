@@ -19,27 +19,34 @@ router.get('/', function (req, res, next) {
             console.log("----Successfully verified creds----")
             console.log("Twitter user identified  is: " + JSON.stringify((loggedInUser["twitterIdentifier"])))
 
-            // let prettyFriendsList = getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
+            // let prettyFriendsList = await getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
 
             let prettyFriendsList = await test.getTestFriends()
 
             console.log("prettyFriendsList  : " + prettyFriendsList)
 
-            // https://expressjs.com/en/api.html#res.render
-            res.render('reccos', {title: 'LessNoise', prettyFriendsList: prettyFriendsList})
+            res.render('reccos', {title: 'LessNoise', loggedInUser: loggedInUser, prettyFriendsList: prettyFriendsList})
         }
     })
 })
 
+/*
+Can do 15 requests per 15min
+  window https://developer.twitter.com/en/docs/basics/rate-limiting.html
+  Use count=200 to get max friends in friends list call https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friends-list.html
+ */
+
 async function getFriends(accesstoken, accesstokensecret){
 
     //get friends list
-    //https://developer.twitter.com/en/docs/basics/cursoring
     let nextcursor = -1
     let rawFriendsList = []
+    let callCount = 0
 
-    while (nextcursor !== 0) {
+    while (nextcursor !== 0 && callCount <= 0) {
+        console.log("-----callcount is ", callCount)
         console.log("-----nextcursor is ", nextcursor)
+        console.log("-----rawfriendslist has size ", rawFriendsList.length)
         try {
             const twitterResponse = await makeFriendsListCall(
                 nextcursor,
@@ -47,6 +54,7 @@ async function getFriends(accesstoken, accesstokensecret){
                 accesstokensecret
             )
             nextcursor = twitterResponse["next_cursor"]
+            callCount++
 
             for (let i = 0; i < twitterResponse["users"].length; i++) {
                 console.log("adding friend " + twitterResponse["users"][i]["screen_name"])
@@ -59,10 +67,11 @@ async function getFriends(accesstoken, accesstokensecret){
 
     console.log("-----Finished cursoring-----")
 
+    console.log("-----callcount is ", callCount)
     console.log("rawFriendsList has size : " , rawFriendsList.length)
 
-    let transformedFriendsList = utils.transformFriendsList(rawFriendsList)
-    let prettyFriendsList = utils.getPrettyFriendsList(transformedFriendsList)
+    let augmentedFriendsList = utils.augmentFriendsList(rawFriendsList)
+    let prettyFriendsList = utils.getPrettyFriendsList(augmentedFriendsList)
 
     return prettyFriendsList
 }
