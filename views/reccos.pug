@@ -9,20 +9,56 @@ block content
 
   p
 
-  // https://api.twitter.com/1.1/friendships/destroy.json
 
-  table.table
-    tr
-      each val in prettyFriendsList["interesting_keys_titles"]
-        th=val
-      th=link
-    each val in prettyFriendsList["friends"]
+  table#reccs.table.display.table-bordered.table-sm
+    thead
       tr
-        each v in val
-            td=v
-        td="twitter.com/"+val["screen_name"]
+        each val in prettyFriendsList["interesting_keys_titles"]
+          th=val
+        th=link
+    tbody
+      each val in prettyFriendsList["friends"]
+        tr
+          each v in val
+              td=v
+          td="twitter.com/"+val["screen_name"]
 
   //<a href="https://twitter.com/EricaJoy?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @EricaJoy</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+  // https://datatables.net/examples/styling/bootstrap4.html
+  //https://github.com/DataTables/DataTables
+
+  button#unfollow Unfollow selected
+
+  script.
+      $(document).ready(function () {
+          var table = $('#reccs').DataTable();
+
+          $('#reccs tbody').on('click', 'tr', function () {
+              $(this).toggleClass('selected');
+          });
+          
+          // some inspiration from https://codepedia.info/jquery-get-table-cell-td-value-div/
+          // debug in console by jquery selecting and seeing whats avaialble in the object
+
+          $("#unfollow").on('click', function () {
+
+              var arrData = [];
+
+              // loop over each table row (tr)
+              $(".selected").each(function () {
+                  var currentRow = $(this);
+                  // var username = currentRow.find("td:eq(0)").text();
+                  console.log(currentRow)
+                  var username = currentRow[0].firstChild.textContent;
+                  arrData.push(username);
+              });
+
+              alert(arrData);
+              console.log(arrData);
+
+          });
+      });
+
   div * capped at 3000
-  div ** Average tweets per day, descending
+  div ** Average tweets per day
