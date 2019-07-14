@@ -1,64 +1,67 @@
 extends layout
 
 block content
-  h1= title
-  p Thanks for signing in @#{loggedInUser["screen_name"]}
-  p Here are your unfollow recommendations:
+    h1= title
+    p Thanks for signing in @#{loggedInUser["screen_name"]}
+    p Here are the noisiest people you follow (up to 1000) sorted by average number of tweets per day.
 
-  p You are seeing everyone* you follow sorted by the noisiest** first
+    p.unfollow Select who think deserves a ✂️, and click on unfollow!
 
-  p
+    table#reccs.table.display.table-bordered.table-sm
+        thead
+            tr
+                each val in prettyFriendsList["interesting_keys_titles"]
+                    th=val
+                th=link
+        tbody
+            //td
+            //    img(src=#(prettyFriendsList["friends"][0]))
+            each val in prettyFriendsList["friends"]
+                tr
+                    td
+                        //img(src=val[0])
+                        td val[0]
+                        each v in val
+                            td=v
 
+    //<a href="https://twitter.com/EricaJoy?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @EricaJoy</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-  table#reccs.table.display.table-bordered.table-sm
-    thead
-      tr
-        each val in prettyFriendsList["interesting_keys_titles"]
-          th=val
-        th=link
-    tbody
-      each val in prettyFriendsList["friends"]
-        tr
-          each v in val
-              td=v
-          td="twitter.com/"+val["screen_name"]
+    // https://datatables.net/examples/styling/bootstrap4.html
+    //https://github.com/DataTables/DataTables
 
-  //<a href="https://twitter.com/EricaJoy?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @EricaJoy</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    button#unfollow Unfollow selected
 
-  // https://datatables.net/examples/styling/bootstrap4.html
-  //https://github.com/DataTables/DataTables
+    script.
+        $(document).ready(function () {
 
-  button#unfollow Unfollow selected
+            // https://datatables.net/reference/option/
+            var table = $('#reccs').DataTable({
+                "lengthChange": false,
+                "pageLength": 20
+            });
 
-  script.
-      $(document).ready(function () {
-          var table = $('#reccs').DataTable();
+            $('#reccs tbody').on('click', 'tr', function () {
+                $(this).toggleClass('selected');
+            });
 
-          $('#reccs tbody').on('click', 'tr', function () {
-              $(this).toggleClass('selected');
-          });
+            // some inspiration from https://codepedia.info/jquery-get-table-cell-td-value-div/
+            // debug in console by jquery selecting and seeing whats avaialble in the object
 
-          // some inspiration from https://codepedia.info/jquery-get-table-cell-td-value-div/
-          // debug in console by jquery selecting and seeing whats avaialble in the object
+            $("#unfollow").on('click', function () {
 
-          $("#unfollow").on('click', function () {
+                var arrData = [];
 
-              var arrData = [];
+                // loop over each table row (tr)
+                $(".selected").each(function () {
+                    var currentRow = $(this);
+                    // var username = currentRow.find("td:eq(0)").text();
+                    console.log(currentRow)
+                    var username = currentRow[0].firstChild.textContent;
+                    arrData.push(username);
+                });
 
-              // loop over each table row (tr)
-              $(".selected").each(function () {
-                  var currentRow = $(this);
-                  // var username = currentRow.find("td:eq(0)").text();
-                  console.log(currentRow)
-                  var username = currentRow[0].firstChild.textContent;
-                  arrData.push(username);
-              });
+                alert(arrData);
+                console.log(arrData);
 
-              alert(arrData);
-              console.log(arrData);
-
-          });
-      });
-
-  div * capped at 3000
-  div ** Average tweets per day
+            });
+        });

@@ -4,6 +4,10 @@ tr.selected{
     background-color:#ff9999
 }
 
+p.unfollow{
+    color:#ff9999
+}
+
 /*body {*/
     /*padding: 50px;*/
     /*!*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*!*/

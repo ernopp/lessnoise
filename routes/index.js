@@ -39,12 +39,12 @@ Can do 15 requests per 15min
 
 async function getFriends(accesstoken, accesstokensecret){
 
-    //get friends list
     let nextcursor = -1
     let rawFriendsList = []
     let callCount = 0
 
-    while (nextcursor !== 0 && callCount <= 0) {
+    // cap at 1000 recommendations - 5 calls of 200 each
+    while (nextcursor !== 0 && callCount <= 4) {
         console.log("-----callcount is ", callCount)
         console.log("-----nextcursor is ", nextcursor)
         console.log("-----rawfriendslist has size ", rawFriendsList.length)
