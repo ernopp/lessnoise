@@ -26,6 +26,14 @@ router.get('/', function (req, res, next) {
 
             console.log("prettyFriendsList  : " + prettyFriendsList)
 
+            // let reccosContext = {}
+            // reccosContext.title = "LessNoise"
+            // reccosContext.loggedInUser = loggedInUser
+            // reccosContext.prettyFriendsList = prettyFriendsList
+            // reccosContext.oauthAccessToken = req.session.oauthAccessToken
+            // reccosContext.oauthAccessTokenSecret = req.session.oauthAccessTokenSecret
+            // reccosContext.makeDestroyFriendshipCall = makeDestroyFriendshipCall
+
             res.render('reccos', {title: 'LessNoise', loggedInUser: loggedInUser, prettyFriendsList: prettyFriendsList})
         }
     })
@@ -37,7 +45,7 @@ Can do 15 requests per 15min
   Use count=200 to get max friends in friends list call https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friends-list.html
  */
 
-async function getFriends(accesstoken, accesstokensecret){
+async function getFriends(accesstoken, accesstokensecret) {
 
     let nextcursor = -1
     let rawFriendsList = []
@@ -69,7 +77,7 @@ async function getFriends(accesstoken, accesstokensecret){
     console.log("-----Finished cursoring-----")
 
     console.log("-----callcount is ", callCount)
-    console.log("rawFriendsList has size : " , rawFriendsList.length)
+    console.log("rawFriendsList has size : ", rawFriendsList.length)
 
     let augmentedFriendsList = utils.augmentFriendsList(rawFriendsList)
     let prettyFriendsList = utils.getPrettyFriendsList(augmentedFriendsList)
@@ -80,22 +88,22 @@ async function getFriends(accesstoken, accesstokensecret){
 function makeFriendsListCall(cursor, oauthAccessToken, oauthAccessTokenSecret) {
     return new Promise(function (resolve, reject) {
 
-    consumer.get(
-        "https://api.twitter.com/1.1/friends/list.json?cursor=" + cursor + "&count=200&skip_status=true&include_user_entities=false",
-        oauthAccessToken,
-        oauthAccessTokenSecret,
-        function (error, d) {
-            let data = JSON.parse(d)
-            if (error) {
-                const e = JSON.stringify(error)
-                console.log("Error getting friends, cursor is: " + cursor + " error: " + e)
-                return reject(error)
-            } else {
-                console.log("-------------GOT DATA BACK --------, number of objects: ", data["users"].length)
+        consumer.get(
+            "https://api.twitter.com/1.1/friends/list.json?cursor=" + cursor + "&count=200&skip_status=true&include_user_entities=false",
+            oauthAccessToken,
+            oauthAccessTokenSecret,
+            function (error, d) {
+                let data = JSON.parse(d)
+                if (error) {
+                    const e = JSON.stringify(error)
+                    console.log("Error getting friends, cursor is: " + cursor + " error: " + e)
+                    return reject(error)
+                } else {
+                    console.log("-------------GOT DATA BACK --------, number of objects: ", data["users"].length)
 
-                return resolve(data)
-            }
-        })
+                    return resolve(data)
+                }
+            })
     })
 }
 

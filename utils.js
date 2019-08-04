@@ -1,8 +1,9 @@
 //utils to deal with friends lists jsons 
 
 const gpi = function getPrettyFriendsList(items) {
-    const interestingKeys = ["profile_image_url", "screen_name", "name", "statuses_count", "ln_days_with_account", "ln_average_statuses_per_day"]
-    const interestingKeysTitles = ["Pic", "Username", "Name", "Tweet" +
+    //"profile_image_url",
+    const interestingKeys = ["screen_name", "name", "statuses_count", "ln_days_with_account", "ln_average_statuses_per_day"]
+    const interestingKeysTitles = ["Username", "Name", "Tweet" +
     " count", "Days" +
     " since account creation", "Average tweets per day"]
     let prettyItemsList = []

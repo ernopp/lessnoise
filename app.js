@@ -6,6 +6,7 @@ const session = require('express-session')
 
 const indexRouter = require('./routes/index')
 const signInRouter = require('./routes/signin')
+const unfollowRouter = require('./routes/unfollow')
 const path = require('path')
 
 inspect = require('util-inspect')
@@ -28,6 +29,8 @@ app.use(session({ secret: "very secret" }))
 //Routes
 app.use('/', indexRouter)
 app.use('/signin', signInRouter)
+app.use('/unfollow', unfollowRouter)
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

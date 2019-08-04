@@ -5,6 +5,7 @@ tr.selected{
 }
 
 p.unfollow{
+    font-weight: bold;
     color:#ff9999
 }
 

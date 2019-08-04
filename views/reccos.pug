@@ -2,8 +2,8 @@ extends layout
 
 block content
     h1= title
-    p Thanks for signing in @#{loggedInUser["screen_name"]}
-    p Here are the noisiest people you follow (up to 1000) sorted by average number of tweets per day.
+    p Thanks for signing in @#{loggedInUser["screen_name"]} - you're one step closer to a blissful feed.
+    p Here are the noisiest people you follow (up to 1000) sorted by average number of tweets per day since they've had an account.
 
     p.unfollow Select who think deserves a ✂️, and click on unfollow!
 
@@ -12,17 +12,11 @@ block content
             tr
                 each val in prettyFriendsList["interesting_keys_titles"]
                     th=val
-                th=link
         tbody
-            //td
-            //    img(src=#(prettyFriendsList["friends"][0]))
             each val in prettyFriendsList["friends"]
                 tr
-                    td
-                        //img(src=val[0])
-                        td val[0]
-                        each v in val
-                            td=v
+                    each v in val
+                        td=v
 
     //<a href="https://twitter.com/EricaJoy?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @EricaJoy</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -60,8 +54,8 @@ block content
                     arrData.push(username);
                 });
 
-                alert(arrData);
-                console.log(arrData);
-
+                if (confirm("Are you sure you want to unfollow: " + arrData)) {
+                    location.href = "/unfollow?userIds=" + arrData
+                }
             });
         });
