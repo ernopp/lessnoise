@@ -6,9 +6,11 @@ Sign in with Twitter, and see _Unfollow_ Recommendations: who tweets too much an
 # Resources
 
 * Express & Pug
+    * Understanding Express https://evanhahn.com/understanding-express/
     * Express routing
 https://expressjs.com/en/starter/basic-routing.html
     * Express session state https://github.com/expressjs/session#cookiesecure
+    * Why `bin/www` https://stackoverflow.com/questions/23169941/what-does-bin-www-do-in-express-4-x
     * Pug templates
     https://pugjs.org/api/reference.html
 * Node utils
@@ -16,12 +18,15 @@ https://expressjs.com/en/starter/basic-routing.html
     * Check for unused dependencies https://www.npmjs.com/package/depcheck
 * Twitter API
     * Implementing sign-in with Twitter https://developer.twitter.com/en/docs/twitter-for-websites/log-in-with-twitter/guides/implementing-sign-in-with-twitter
+    * `passport-twitter`  http://www.passportjs.org/docs/twitter/
     * Get friends / list https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friends-list
     * Cursoring https://developer.twitter.com/en/docs/basics/cursoring
     * Rate limiting https://developer.twitter.com/en/docs/basics/rate-limiting.html
     * Destroy Friendship https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/post-friendships-destroy.html
 * Styling
     * Data tables https://datatables.net/examples/styling/bootstrap4.html & https://github.com/DataTables/DataTables
+* Deploying
+    * https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment
 * Admin
     * Twitter app settings https://apps.twitter.com/app/5573851/settings
     * Todos https://trello.com/b/skM82nUh/lessnosie
@@ -29,9 +34,9 @@ https://expressjs.com/en/starter/basic-routing.html
 
 # Run
 
-`nodemon ./bin/www` (development - not setting node_env defaults it to development)
+`nodemon start` (development - not setting node_env defaults it to development)
 
-`set node_env=production && nodemon ./bin/www`
+`set node_env=production && nodemon start`
 
 
 

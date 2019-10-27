@@ -3,6 +3,7 @@ const express = require('express')
 const createError = require('http-errors')
 const logger = require('morgan')
 const session = require('express-session')
+const compression = require('compression')
 
 const indexRouter = require('./routes/index')
 const signInRouter = require('./routes/signin')
@@ -16,9 +17,13 @@ app = express()
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
+https://github.com/expressjs/morgan#morganformat-options
 app.use(logger('dev'))
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+app.use(compression())
 
 // Passing a built-in function - express.static - to handle static files. https://expressjs.com/en/4x/api.html#express.static
 app.use(express.static(path.join(__dirname, 'public')))
