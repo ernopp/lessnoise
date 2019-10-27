@@ -93,7 +93,7 @@ async function getFriends(accesstoken, accesstokensecret) {
 }
 
 function makeFriendsListCall(cursor, oauthAccessToken, oauthAccessTokenSecret) {
-    return new Promise(function (resolve, reject) {
+    let promise = new Promise(function (resolve, reject) {
 
         consumer.get(
             "https://api.twitter.com/1.1/friends/list.json?cursor=" + cursor + "&count=200&skip_status=true&include_user_entities=false",
@@ -112,6 +112,14 @@ function makeFriendsListCall(cursor, oauthAccessToken, oauthAccessTokenSecret) {
                 }
             })
     })
+
+    promise.catch(function(error) {
+        console.error(error)
+        return reject(error)
+    });
+
+
+    return promise;
 }
 
 module.exports = router
