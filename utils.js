@@ -1,33 +1,38 @@
 //utils to deal with friends lists jsons 
 
+let baseURL = "https://www.twitter.com/"
+
 const gpi = function getPrettyFriendsList(items) {
     //"profile_image_url",
-    const interestingKeys = ["screen_name", "name", "statuses_count", "ln_days_with_account", "ln_average_statuses_per_day"]
-    const interestingKeysTitles = ["Username", "Name", "Tweet" +
-    " count", "Days" +
-    " since account creation", "Average tweets per day"]
-    let prettyItemsList = []
+    const interestingKeys = ["name", "description", "ln_average_statuses_per_day"]
+    const interestingKeysTitles = ["Name", "Description", "Average tweets per day"]
+    let prettyFriendsList = []
 
     items.forEach(function (item, index) {
-        var prettyItem = {}
+        var friend = {}
+
+        friend["username"] = item["screen_name"]
+        friend["image"] = item["profile_image_url"]
+        friend["info"] = {}
 
         item["ln_average_statuses_per_day"] = parseFloat(item["ln_average_statuses_per_day"]).toFixed(2)
         item["ln_days_with_account"] = parseFloat(item["ln_days_with_account"]).toFixed(0)
 
         interestingKeys.forEach(function (obj, index) {
-            prettyItem[obj] = item[obj]
+            friend["info"][obj] = item[obj]
         })
 
-        prettyItemsList.push(prettyItem)
+        prettyFriendsList.sort(function(a, b){
+            return -1 * (a["info"].ln_average_statuses_per_day - b["info"].ln_average_statuses_per_day)
+        })
+
+        prettyFriendsList.push(friend)
     })
 
     return {
         "interesting_keys": interestingKeys,
         "interesting_keys_titles": interestingKeysTitles,
-        "friends": prettyItemsList.sort(function(a, b){
-                return -1 * (a.ln_average_statuses_per_day - b.ln_average_statuses_per_day)
-            }
-        )
+        "friends": prettyFriendsList
     }
 }
 
@@ -86,4 +91,4 @@ const isj = function IsJsonString(str) {
     return true
 }
 
-module.exports  = {augmentFriendsList: tf, getPrettyFriendsList: gpi, getLoggedInUser: gliu};
+module.exports  = {augmentFriendsList: tf, getPrettyFriendsList: gpi, getLoggedInUser: gliu, baseURL: baseURL};

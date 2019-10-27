@@ -1,6 +1,5 @@
 const consumer = require('../twitter-client')
 const express = require('express')
-// const bootstrap = require('bootstrap')
 const router = express.Router()
 const app = require('../app')
 const utils = require('../utils')
@@ -11,30 +10,28 @@ router.get('/', function (req, res, next) {
     consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, async function (error, data, response) {
         if (error) {
             console.log("error verifying creds trying to connect: ", JSON.stringify(error))
-            res.render('home', {title: 'LessNoise'})
+            res.render('home', {title: '🙏 LessNoise'})
 
         } else {
 
-            let loggedInUser = utils.getLoggedInUser(data)
+            try{
+                let loggedInUser = utils.getLoggedInUser(data)
 
-            console.log("----Successfully verified creds----")
-            console.log("Twitter user identified  is: " + JSON.stringify((loggedInUser["twitterIdentifier"])))
+                console.log("----Successfully verified creds----")
+                console.log("Twitter user identified  is: " + JSON.stringify((loggedInUser["twitterIdentifier"])))
 
-            // let prettyFriendsList = await getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
+                // let prettyFriendsList = await getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
 
-            let prettyFriendsList = await test.getTestFriends()
+                let prettyFriendsList = await test.getTestFriends()
 
-            console.log("prettyFriendsList  : " + prettyFriendsList)
+                console.log("prettyFriendsList  : " + prettyFriendsList)
 
-            // let reccosContext = {}
-            // reccosContext.title = "LessNoise"
-            // reccosContext.loggedInUser = loggedInUser
-            // reccosContext.prettyFriendsList = prettyFriendsList
-            // reccosContext.oauthAccessToken = req.session.oauthAccessToken
-            // reccosContext.oauthAccessTokenSecret = req.session.oauthAccessTokenSecret
-            // reccosContext.makeDestroyFriendshipCall = makeDestroyFriendshipCall
+                res.render('reccos', {title: '🙏 LessNoise', loggedInUser: loggedInUser, prettyFriendsList: prettyFriendsList, baseURL: utils.baseURL})
+            }
+            catch (err) {
+                return next(err)
+            }
 
-            res.render('reccos', {title: 'LessNoise', loggedInUser: loggedInUser, prettyFriendsList: prettyFriendsList})
         }
     })
 })

@@ -7,8 +7,18 @@ Sign in with Twitter, and:
 
 # Resources
 
+* Express routing
+https://expressjs.com/en/starter/basic-routing.html
+* Pug templates
+https://pugjs.org/api/reference.html
+* Implementing sign-in with Twitter https://developer.twitter.com/en/docs/twitter-for-websites/log-in-with-twitter/guides/implementing-sign-in-with-twitter
+* Twitter API
+    * Get friends / list https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-friends-list
+    * Cursoring https://developer.twitter.com/en/docs/basics/cursoring
+* Check for unused dependencies https://www.npmjs.com/package/depcheck
 * Twitter app settings https://apps.twitter.com/app/5573851/settings
 * Todos https://trello.com/b/skM82nUh/lessnosie
+
 
 # Run
 
