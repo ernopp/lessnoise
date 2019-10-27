@@ -4,8 +4,8 @@ let baseURL = "https://www.twitter.com/"
 
 const gpi = function getPrettyFriendsList(items) {
     //"profile_image_url",
-    const interestingKeys = ["name", "description", "ln_average_statuses_per_day"]
-    const interestingKeysTitles = ["Name", "Description", "Average tweets per day"]
+    const interestingKeys = ["name", "ln_average_statuses_per_day"]
+    const interestingKeysTitles = ["Name", "Average tweets per day"]
     let prettyFriendsList = []
 
     items.forEach(function (item, index) {
