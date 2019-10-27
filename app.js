@@ -23,8 +23,24 @@ app.use(express.urlencoded({ extended: false }))
 // Passing a built-in function - express.static - to handle static files. https://expressjs.com/en/4x/api.html#express.static
 app.use(express.static(path.join(__dirname, 'public')))
 
-// https://nodewebapps.com/2017/06/18/how-do-nodejs-sessions-work/
-app.use(session({ secret: "very secret" }))
+// set up session cookie
+console.log(app.get('env'))
+
+var sess = {
+    secret: 'keyboard cat',
+    cookie: {},
+    resave: false,
+    saveUninitialized: false
+}
+
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sess.cookie.secure = true // serve secure cookies
+}
+
+app.use(session(sess))
+
+// app.use(session({ secret: "very secret", cookie: { maxAge: 60000 } }))
 
 //Routes
 app.use('/', indexRouter)
