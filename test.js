@@ -1,6 +1,5 @@
 let fs = require('fs')
-let MongoClient = require('mongodb').MongoClient
-let  url = 'mongodb://localhost/lessnoise'
+const debug = require('debug')('lessnoise:index')
 
 let utils = require('./utils');
 
@@ -19,7 +18,7 @@ var tf = async function getTestFriends(){
 
             let prettyFriendsList = utils.getPrettyFriendsList(transformedFriendsList);
 
-            console.log(prettyFriendsList)
+            debug(prettyFriendsList)
 
             return resolve(prettyFriendsList);
         });

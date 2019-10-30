@@ -55,7 +55,7 @@ block content
                 $(".selected").each(function () {
                     var currentRow = $(this);
                     // var username = currentRow.find("td:eq(0)").text();
-                    console.log(currentRow)
+                    debug(currentRow)
                     var username = currentRow[0].firstChild.textContent;
                     arrData.push(username);
                 });

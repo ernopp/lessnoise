@@ -2,11 +2,12 @@
 
 const consumer = require('../twitter-client')
 const express = require('express')
+const debug = require('debug')('lessnoise:unfollow')
 const router = express.Router()
 
 router.get('/', async function (req, res) {
     let userId = req.query["userIds"]
-    console.log("unfollow page hit with user ids " + userId)
+    debug("unfollow page hit with user ids " + userId)
     // res.send("received userIds " + req.query["userIds"])
 
     let destroyedFriend = await destroyFriends("376589964", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
@@ -23,7 +24,7 @@ router.get('/', async function (req, res) {
 async function destroyFriends(userIds, accesstoken, accesstokensecret){
     let destroyedFriend = {}
     try{
-        console.log("calling makeDestroyFriendshipCall")
+        debug("calling makeDestroyFriendshipCall")
         destroyedFriend = await makeDestroyFriendshipCall(userIds, accesstoken, accesstokensecret)
     } catch (err) {
         return next(err)
@@ -39,7 +40,7 @@ function makeDestroyFriendshipCall(screen_name, oauthAccessToken, oauthAccessTok
         // returns
         // https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/user-object
 
-        console.log("calling api destroy endpoint")
+        debug("calling api destroy endpoint")
 
         consumer.post(
             "https://api.twitter.com/1.1/friendships/destroy.json?screen_name=" + screen_name,
@@ -49,10 +50,10 @@ function makeDestroyFriendshipCall(screen_name, oauthAccessToken, oauthAccessTok
                 let data = JSON.parse(d)
                 if (error) {
                     const e = JSON.stringify(error)
-                    console.log("Error destroying friendships: " + e)
+                    debug("Error destroying friendships: " + e)
                     return reject(error)
                 } else {
-                    console.log("Destroyed friendship. User destroyed has" +
+                    debug("Destroyed friendship. User destroyed has" +
                         " id:" + data["id"] + " and username: " + data["screen_name"])
                     return resolve(data)
                 }

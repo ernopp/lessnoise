@@ -2,6 +2,8 @@
 
 let baseURL = "https://www.twitter.com/"
 
+const debug = require('debug')('lessnoise:utils')
+
 const gpi = function getPrettyFriendsList(items) {
     //"profile_image_url",
     const interestingKeys = ["name", "ln_average_statuses_per_day"]
@@ -76,7 +78,7 @@ const gliu = function getLoggedInUser(data){
         screen_name: verifyCredentialsData["screen_name"]
     }
 
-    console.log("loggedInUser is " + JSON.stringify(loggedInUser))
+    debug("loggedInUser is " + JSON.stringify(loggedInUser))
 
     return loggedInUser
 }
@@ -85,7 +87,7 @@ const isj = function IsJsonString(str) {
     try {
         JSON.parse(str)
     } catch (e) {
-        console.log(e)
+        debug(e)
         return false
     }
     return true

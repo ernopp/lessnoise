@@ -4,6 +4,7 @@ const consumer = require('../twitter-client');
 const express = require('express');
 const router = express.Router();
 const app = require('../app');
+const debug = require('debug')('lessnoise:signin')
 const utils = require('../utils');
 
 router.get('/', function(req, res){
@@ -14,24 +15,23 @@ router.get('/', function(req, res){
       req.session.oauthRequestToken = oauthToken;
       req.session.oauthRequestTokenSecret = oauthTokenSecret;
       // req.session.save();
-      console.log("Calling out to twitter for first oauth");
-      console.log("------------------------");
-      console.log("Session id is: " + req.sessionID);
-      console.log("<<"+req.session.oauthRequestToken);
-      console.log("<<"+req.session.oauthRequestTokenSecret);
+      debug("Calling out to twitter for first oauth");
+      debug("------------------------");
+      debug("Session id is: " + req.sessionID);
+      debug("<<"+req.session.oauthRequestToken);
+      debug("<<"+req.session.oauthRequestTokenSecret);
       res.redirect("https://twitter.com/oauth/authorize?oauth_token="+req.session.oauthRequestToken);      
     }
   });
 });
 
 router.get('/callback', function(req, res){
-    console.log("Executing callback");
-    console.log(res)
-  console.log("------------------------");
-  console.log("Session id is: " + req.sessionID);
-  console.log("token>>"+req.session.oauthRequestToken);
-  console.log("secret>>"+req.session.oauthRequestTokenSecret);
-  console.log("oauth_verifier>>"+req.query.oauth_verifier);
+    debug("Executing callback");
+  debug("------------------------");
+  debug("Session id is: " + req.sessionID);
+  debug("token>>"+req.session.oauthRequestToken);
+  debug("secret>>"+req.session.oauthRequestTokenSecret);
+  debug("oauth_verifier>>"+req.query.oauth_verifier);
   consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
     if (error) {
       res.send("Error getting OAuth access token : " + inspect(error) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(results) + "]", 500);

@@ -2,6 +2,7 @@ const consumer = require('../twitter-client')
 const express = require('express')
 const router = express.Router()
 const app = require('../app')
+const debug = require('debug')('lessnoise:index')
 const utils = require('../utils')
 const test = require('../test')
 
@@ -9,7 +10,7 @@ const test = require('../test')
 router.get('/', function (req, res, next) {
     consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, async function (error, data, response) {
         if (error) {
-            console.log("error verifying creds trying to connect: ", JSON.stringify(error))
+            debug("error verifying creds trying to connect: ", JSON.stringify(error))
             res.render('home', {title: '🙏 LessNoise'})
 
         } else {
@@ -17,14 +18,14 @@ router.get('/', function (req, res, next) {
             try{
                 let loggedInUser = utils.getLoggedInUser(data)
 
-                console.log("----Successfully verified creds----")
-                console.log("Twitter user identified  is: " + JSON.stringify((loggedInUser["twitterIdentifier"])))
+                debug("----Successfully verified creds----")
+                debug("Twitter user identified  is: " + JSON.stringify((loggedInUser["twitterIdentifier"])))
 
                 // let prettyFriendsList = await getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
 
                 let prettyFriendsList = await test.getTestFriends()
 
-                console.log("prettyFriendsList  : " + prettyFriendsList)
+                debug("prettyFriendsList  : " + prettyFriendsList)
 
                 res.render('reccos', {title: '🙏 LessNoise', loggedInUser: loggedInUser, prettyFriendsList: prettyFriendsList, baseURL: utils.baseURL})
             }
@@ -60,9 +61,9 @@ async function getFriends(accesstoken, accesstokensecret) {
 
     // cap at 1000 recommendations - 5 calls of 200 each
     while (nextcursor !== 0 && callCount <= 4) {
-        console.log("-----callcount is ", callCount)
-        console.log("-----nextcursor is ", nextcursor)
-        console.log("-----rawfriendslist has size ", rawFriendsList.length)
+        debug("-----callcount is ", callCount)
+        debug("-----nextcursor is ", nextcursor)
+        debug("-----rawfriendslist has size ", rawFriendsList.length)
         try {
             const twitterResponse = await makeFriendsListCall(
                 nextcursor,
@@ -73,7 +74,7 @@ async function getFriends(accesstoken, accesstokensecret) {
             callCount++
 
             for (let i = 0; i < twitterResponse["users"].length; i++) {
-                console.log("adding friend " + twitterResponse["users"][i]["screen_name"])
+                debug("adding friend " + twitterResponse["users"][i]["screen_name"])
                 rawFriendsList.push(twitterResponse.users[i])
             }
         } catch (err) {
@@ -81,10 +82,10 @@ async function getFriends(accesstoken, accesstokensecret) {
         }
     }
 
-    console.log("-----Finished cursoring-----")
+    debug("-----Finished cursoring-----")
 
-    console.log("-----callcount is ", callCount)
-    console.log("rawFriendsList has size : ", rawFriendsList.length)
+    debug("-----callcount is ", callCount)
+    debug("rawFriendsList has size : ", rawFriendsList.length)
 
     let augmentedFriendsList = utils.augmentFriendsList(rawFriendsList)
     let prettyFriendsList = utils.getPrettyFriendsList(augmentedFriendsList)
@@ -103,10 +104,10 @@ function makeFriendsListCall(cursor, oauthAccessToken, oauthAccessTokenSecret) {
                 let data = JSON.parse(d)
                 if (error) {
                     const e = JSON.stringify(error)
-                    console.log("Error getting friends, cursor is: " + cursor + " error: " + e)
+                    debug("Error getting friends, cursor is: " + cursor + " error: " + e)
                     return reject(error)
                 } else {
-                    console.log("-------------GOT DATA BACK --------, number of objects: ", data["users"].length)
+                    debug("-------------GOT DATA BACK --------, number of objects: ", data["users"].length)
 
                     return resolve(data)
                 }

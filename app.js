@@ -5,11 +5,12 @@ const logger = require('morgan')
 const session = require('express-session')
 const MemoryStore = require('memorystore')(session)
 const compression = require('compression')
+const debug = require('debug')('lessnoise:app')
+const path = require('path')
 
 const indexRouter = require('./routes/index')
 const signInRouter = require('./routes/signin')
 const unfollowRouter = require('./routes/unfollow')
-const path = require('path')
 
 inspect = require('util-inspect')
 app = express()
@@ -30,7 +31,7 @@ app.use(compression())
 app.use(express.static(path.join(__dirname, 'public')))
 
 // set up session cookie
-console.log(app.get('env'))
+debug(app.get('env'))
 
 var sess = {
     secret: 'keyboard cat',
