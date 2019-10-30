@@ -7,7 +7,6 @@ const app = require('../app');
 const utils = require('../utils');
 
 router.get('/', function(req, res){
-  // res.send(consumer)
   consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
     if (error) {
       res.send("Error getting OAuth request token : " + inspect(error), 500);
@@ -23,18 +22,17 @@ router.get('/', function(req, res){
       res.redirect("https://twitter.com/oauth/authorize?oauth_token="+req.session.oauthRequestToken);      
     }
   });
-  // res.send("here")
 });
 
 router.get('/callback', function(req, res){
     console.log("Executing callback");
+    console.log(res)
   console.log("------------------------");
   console.log("Session id is: " + req.sessionID);
   console.log("token>>"+req.session.oauthRequestToken);
   console.log("secret>>"+req.session.oauthRequestTokenSecret);
   console.log("oauth_verifier>>"+req.query.oauth_verifier);
   consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
-    //consumer.getOAuthAccessToken(req.query.oauthRequestToken, req.query.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
     if (error) {
       res.send("Error getting OAuth access token : " + inspect(error) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(results) + "]", 500);
     } else {

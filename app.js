@@ -3,6 +3,7 @@ const express = require('express')
 const createError = require('http-errors')
 const logger = require('morgan')
 const session = require('express-session')
+const MemoryStore = require('memorystore')(session)
 const compression = require('compression')
 
 const indexRouter = require('./routes/index')
@@ -34,6 +35,9 @@ console.log(app.get('env'))
 var sess = {
     secret: 'keyboard cat',
     cookie: {},
+    store: new MemoryStore({
+        checkPeriod: 86400000 // prune expired entries every 24h
+    }),
     resave: false,
     saveUninitialized: false
 }
