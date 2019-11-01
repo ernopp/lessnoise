@@ -7,10 +7,12 @@ const app = require('../app');
 const debug = require('debug')('lessnoise:signin')
 const utils = require('../utils');
 
-router.get('/', function(req, res){
+router.get('/', function(req, res, next){
   consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
     if (error) {
-      res.send("Error getting OAuth request token : " + inspect(error), 500);
+      debug("error getting oauth request token" + inspect(error))
+      next(error)
+      // res.send("Error getting OAuth request token : " + inspect(error), 500);
     } else {  
       req.session.oauthRequestToken = oauthToken;
       req.session.oauthRequestTokenSecret = oauthTokenSecret;
@@ -25,7 +27,7 @@ router.get('/', function(req, res){
   });
 });
 
-router.get('/callback', function(req, res){
+router.get('/callback', function(req, res, next){
     debug("Executing callback");
   debug("------------------------");
   debug("Session id is: " + req.sessionID);
@@ -34,7 +36,8 @@ router.get('/callback', function(req, res){
   debug("oauth_verifier>>"+req.query.oauth_verifier);
   consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
     if (error) {
-      res.send("Error getting OAuth access token : " + inspect(error) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(results) + "]", 500);
+      // res.send("Error getting OAuth access token : " + inspect(error) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(results) + "]", 500);
+      next(error)
     } else {
       req.session.oauthAccessToken = oauthAccessToken;
       req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;

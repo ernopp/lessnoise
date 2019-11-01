@@ -31,7 +31,7 @@ app.use(compression())
 app.use(express.static(path.join(__dirname, 'public')))
 
 // set up session cookie
-debug(app.get('env'))
+console.log("environment is: "+ app.get('env'))
 
 var sess = {
     secret: 'keyboard cat',
@@ -45,7 +45,7 @@ var sess = {
 
 if (app.get('env') === 'production') {
     app.set('trust proxy', 1) // trust first proxy
-    sess.cookie.secure = true // serve secure cookies
+    // sess.cookie.secure = true // serve secure cookies
 }
 
 app.use(session(sess))
@@ -64,7 +64,7 @@ app.use(function (req, res, next) {
 })
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message //https://expressjs.com/en/api.html#res.locals
   res.locals.error = req.app.get('env') === 'development' ? err : {}
