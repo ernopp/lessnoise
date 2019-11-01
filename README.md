@@ -10,6 +10,7 @@ Sign in with Twitter, and see _Unfollow_ Recommendations: who tweets too much an
     * Express routing
 https://expressjs.com/en/starter/basic-routing.html
     * Express session state https://github.com/expressjs/session#cookiesecure
+    * Ended up using `cookie-session` to store session data encrypted in the cookie, not compatible with Heroku Dynos
     * List of express session stores https://github.com/expressjs/session/blob/master/README.md#compatible-session-stores
     * Why `bin/www` https://stackoverflow.com/questions/23169941/what-does-bin-www-do-in-express-4-x
 * Pug

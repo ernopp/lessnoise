@@ -3,10 +3,10 @@ const express = require('express')
 const createError = require('http-errors')
 const logger = require('morgan')
 const session = require('cookie-session')
-// const MemoryStore = require('memorystore')(session)
 const compression = require('compression')
 const debug = require('debug')('lessnoise:app')
 const path = require('path')
+const config = require('./config')
 
 const indexRouter = require('./routes/index')
 const signInRouter = require('./routes/signin')
@@ -33,12 +33,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 // set up session cookie
 console.log("environment is: "+ app.get('env'))
 
+console.log("config is " + inspect(config))
+
 var sess = {
-    secret: 'keyboard cat',
-    // cookie: {},
-    // store: new MemoryStore({
-    //     checkPeriod: 86400000 // prune expired entries every 24h
-    // }),
+    secret: config.sessionsecret,
     resave: false,
     saveUninitialized: false
 }
@@ -49,8 +47,6 @@ if (app.get('env') === 'production') {
 }
 
 app.use(session(sess))
-
-// app.use(session({ secret: "very secret", cookie: { maxAge: 60000 } }))
 
 //Routes
 app.use('/', indexRouter)
