@@ -49,4 +49,6 @@ Env variables:
 * `PORT`
 
 
+# Gotchas
 
+* Make sure `PORT` is set, even locally

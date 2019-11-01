@@ -1,10 +1,10 @@
 /* Twitter client - app settings: https://apps.twitter.com/app/5573851/settings */
 
-const config = require('./config')
+// require('dotenv').config()
 const oauth = require('oauth')
 
-const _twitterConsumerKey = config.key
-const _twitterConsumerSecret = config.secret
+const _twitterConsumerKey = process.env.KEY
+const _twitterConsumerSecret = process.env.SECRET
 const callbackString = "http://localhost:" + process.env.PORT  + "/signin/callback"
 
 module.exports = new oauth.OAuth(

@@ -6,7 +6,7 @@ const session = require('cookie-session')
 const compression = require('compression')
 const debug = require('debug')('lessnoise:app')
 const path = require('path')
-const config = require('./config')
+require('dotenv').config()
 
 const indexRouter = require('./routes/index')
 const signInRouter = require('./routes/signin')
@@ -33,10 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 // set up session cookie
 console.log("environment is: "+ app.get('env'))
 
-debug("config is " + inspect(config))
-
 var sess = {
-    secret: config.sessionsecret,
+    secret: process.env.SESSIONSECRET,
     resave: false,
     saveUninitialized: false
 }
