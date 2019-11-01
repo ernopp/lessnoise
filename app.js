@@ -12,7 +12,7 @@ const indexRouter = require('./routes/index')
 const signInRouter = require('./routes/signin')
 const unfollowRouter = require('./routes/unfollow')
 
-inspect = require('util-inspect')
+inspect = require('util-inspect') //https://nodejs.org/en/knowledge/getting-started/how-to-use-util-inspect/
 app = express()
 
 // View engine Startup & Options
@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // set up session cookie
 console.log("environment is: "+ app.get('env'))
 
-console.log("config is " + inspect(config))
+debug("config is " + inspect(config))
 
 var sess = {
     secret: config.sessionsecret,

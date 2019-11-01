@@ -40,10 +40,13 @@ https://expressjs.com/en/starter/basic-routing.html
 
 # Run
 
-`nodemon start` (development - not setting node_env defaults it to development)
+`nodemon start`
 
-`set node_env=production && nodemon start`
+Env variables:
 
+* `NODE_ENV`: `production` or `development`
+* `DEBUG`: e.g `lessnoise:*`
+* `PORT`
 
 
 

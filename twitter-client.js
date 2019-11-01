@@ -5,7 +5,7 @@ const oauth = require('oauth')
 
 const _twitterConsumerKey = config.key
 const _twitterConsumerSecret = config.secret
-const callbackString = "http://localhost:3000/signin/callback"
+const callbackString = "http://localhost:" + process.env.PORT  + "/signin/callback"
 
 module.exports = new oauth.OAuth(
   "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token",
