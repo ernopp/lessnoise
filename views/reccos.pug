@@ -2,33 +2,30 @@ extends layout
 
 block content
     h1= title
-    p Thanks for signing in @#{loggedInUser["screen_name"]} - you're one step closer to a blissful feed.
-    p Here are the noisiest people you follow (up to 1000) sorted by average number of tweets per day.
-    p Click on any username to go unfollow them on Twitter.
 
-    table#reccs.table.display
-        thead
-            tr
-                th
-                th Username
-                each val in prettyFriendsList["interesting_keys_titles"]
-                    th=val
-        tbody
-            each val in prettyFriendsList["friends"]
+    div#reccs-intro
+        p Thanks for signing in @#{loggedInUser["screen_name"]} - you're one step closer to a blissful feed.
+        p Here are the noisiest people you follow (up to 1000) sorted by average number of tweets per day.
+        p Click on any username to go unfollow them on Twitter.
+
+    div#reccs-content
+
+        table#reccs.table.display
+            thead
                 tr
-                    td
-                        img(src=val["image"])
-                    td
-                        a(href= baseURL + val["username"]) #{val["username"]}
-                    each v in val["info"]
-                        td=v
-
-    //<a href="https://twitter.com/EricaJoy?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @EricaJoy</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-    // https://datatables.net/examples/styling/bootstrap4.html
-    //https://github.com/DataTables/DataTables
-
-    //button#unfollow Unfollow selected
+                    th
+                    th Username
+                    each val in prettyFriendsList["interesting_keys_titles"]
+                        th=val
+            tbody
+                each val in prettyFriendsList["friends"]
+                    tr
+                        td
+                            img(src=val["image"])
+                        td
+                            a(href= baseURL + val["username"]) #{val["username"]}
+                        each v in val["info"]
+                            td=v
 
     script.
         $(document).ready(function () {

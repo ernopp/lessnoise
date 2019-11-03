@@ -26,9 +26,12 @@ body {
     }
 }
 
+div#reccs-content{
+    width: 80%;
+}
+
 .table{
     font-size: 0.8rem;
-    width: 60%;
 }
 
 table td{
