@@ -12,7 +12,7 @@ https://expressjs.com/en/starter/basic-routing.html
     * Pug templates https://pugjs.org/api/reference.html
 * Node utils
     * Nodemon to hot reload node https://nodemon.io/
-    * Check for unused dependencies https://www.npmjs.com/package/depcheck
+    * Check for unused dependencies `depcheck` https://www.npmjs.com/package/depcheck
 * Twitter API
     * Implementing sign-in with Twitter https://developer.twitter.com/en/docs/twitter-for-websites/log-in-with-twitter/guides/implementing-sign-in-with-twitter
     * Callback URLs https://developer.twitter.com/en/docs/basics/apps/guides/callback-urls

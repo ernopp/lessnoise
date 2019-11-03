@@ -43,3 +43,10 @@ div#reccs-content{
 table td{
     word-break: break-all;
 }
+
+footer {
+    clear: both;
+    position: relative;
+    height: 200px;
+    margin-top: -200px;
+}
