@@ -7,8 +7,13 @@
     /*color:#ff9999*/
 /*}*/
 
+html { height: 100%; }
+
 body {
     margin: 20px;
+    min-height:100%;
+    position:relative;
+    padding-bottom: 50px;
 }
 
 @media (max-width: 350px) {
@@ -32,8 +37,8 @@ div#reccs-content{
 
 @media (min-width: 1300px) {
     div#reccs-content{
-        width: 60%;
-    }
+         width: 60%;
+     }
 }
 
 .table{
@@ -45,8 +50,21 @@ table td{
 }
 
 footer {
-    clear: both;
-    position: relative;
-    height: 200px;
-    margin-top: -200px;
+    position: absolute;
+    left: 0 ; right: 0; bottom: 0;
+    height:50px;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+img{
+    margin-bottom: 1rem;
+}
+
+img#image-preview{
+    width: 95%;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+    margin-bottom: 1rem;
 }
