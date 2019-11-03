@@ -1,10 +1,9 @@
 const consumer = require('../twitter-client')
 const express = require('express')
 const router = express.Router()
-const app = require('../app')
 const debug = require('debug')('lessnoise:index')
 const utils = require('../utils')
-const test = require('../test')
+let fs = require('fs')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -22,7 +21,7 @@ router.get('/', function (req, res, next) {
                 debug("Twitter user identified  is: " + JSON.stringify((loggedInUser["twitterIdentifier"])))
 
                 let prettyFriendsList = (process.env.USETESTDATA === "true")
-                    ? await test.getTestFriends() : await getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
+                    ? await getTestFriends() : await getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
 
                 if(!prettyFriendsList.error){
                     res.render('reccos', {title: '🙏 LessNoise', loggedInUser: loggedInUser, prettyFriendsList: prettyFriendsList.data, baseURL: utils.baseURL})
@@ -70,7 +69,7 @@ async function getFriends(accesstoken, accesstokensecret) {
             nextcursor = twitterResponse["next_cursor"]
             callCount++
 
-            for (let i = 0; i < twitterResponse["users"].length; i++) {
+            for (let i = 0 ; i < twitterResponse["users"].length ; i++) {
                 // debug("adding friend " + twitterResponse["users"][i]["screen_name"])
                 rawFriendsList.push(twitterResponse.users[i])
             }
@@ -117,6 +116,37 @@ function makeFriendsListCall(cursor, oauthAccessToken, oauthAccessTokenSecret) {
     })
 
     debug("contents promise are " +JSON.stringify(promise))
+    return promise
+}
+
+async function getTestFriends(){
+
+    let prettyFriendsList = []
+
+    let promise =  new Promise(function (resolve, reject) {
+
+        //readfile returns a string https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback
+        fs.readFile(__dirname + '/testdata/users-sept15-3.json', function (err, data) {
+            if (err) {
+                return reject(err)
+            }
+
+            let rawFriendsList = JSON.parse(data)["users"]
+            let transformedFriendsList = utils.augmentFriendsList(rawFriendsList)
+
+            prettyFriendsList.data = utils.getPrettyFriendsList(transformedFriendsList)
+
+            debug(prettyFriendsList)
+
+            return resolve(prettyFriendsList)
+        })
+    })
+
+    promise.catch(function(error) {
+        console.error(error)
+        return reject(error)
+    })
+
     return promise
 }
 
