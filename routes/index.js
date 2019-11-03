@@ -21,9 +21,8 @@ router.get('/', function (req, res, next) {
                 debug("----Successfully verified creds----")
                 debug("Twitter user identified  is: " + JSON.stringify((loggedInUser["twitterIdentifier"])))
 
-                // let prettyFriendsList = await getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
-
-                let prettyFriendsList = await test.getTestFriends()
+                let prettyFriendsList = (process.env.USETESTDATA === "true")
+                    ? await test.getTestFriends() : await getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
 
                 debug("prettyFriendsList  : " + prettyFriendsList)
 

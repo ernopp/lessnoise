@@ -32,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // set up session cookie
 console.log("environment is: "+ app.get('env'))
+console.log("usetestdata is: "+ process.env.USETESTDATA)
 
 var sess = {
     secret: process.env.SESSIONSECRET,
