@@ -30,6 +30,12 @@ div#reccs-content{
     width: 80%;
 }
 
+@media (min-width: 1300px) {
+    div#reccs-content{
+        width: 60%;
+    }
+}
+
 .table{
     font-size: 0.8rem;
 }
