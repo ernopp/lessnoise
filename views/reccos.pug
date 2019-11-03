@@ -31,34 +31,9 @@ block content
         $(document).ready(function () {
 
             // https://datatables.net/reference/option/
-            var table = $('#reccs').DataTable({
+            $('#reccs').DataTable({
                 "lengthChange": false,
                 "searching": false,
                 "pageLength": 20
-            });
-
-            $('#reccs tbody').on('click', 'tr', function () {
-                $(this).toggleClass('selected');
-            });
-
-            // some inspiration from https://codepedia.info/jquery-get-table-cell-td-value-div/
-            // debug in console by jquery selecting and seeing whats avaialble in the object
-
-            $("#unfollow").on('click', function () {
-
-                var arrData = [];
-
-                // loop over each table row (tr)
-                $(".selected").each(function () {
-                    var currentRow = $(this);
-                    // var username = currentRow.find("td:eq(0)").text();
-                    debug(currentRow)
-                    var username = currentRow[0].firstChild.textContent;
-                    arrData.push(username);
-                });
-
-                if (confirm("Are you sure you want to unfollow: " + arrData)) {
-                    location.href = "/unfollow?userIds=" + arrData
-                }
-            });
-        });
+            })
+        })

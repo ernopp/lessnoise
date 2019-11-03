@@ -9,7 +9,6 @@ require('dotenv').config()
 
 const indexRouter = require('./routes/index')
 const signInRouter = require('./routes/signin')
-const unfollowRouter = require('./routes/unfollow')
 
 inspect = require('util-inspect') //https://nodejs.org/en/knowledge/getting-started/how-to-use-util-inspect/
 app = express()
@@ -49,8 +48,6 @@ app.use(session(sess))
 //Routes
 app.use('/', indexRouter)
 app.use('/signin', signInRouter)
-app.use('/unfollow', unfollowRouter)
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
