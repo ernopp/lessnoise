@@ -4,9 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/routes/unfollow.js" line="10" mnemonic="2" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b7d6f6d-aea3-411a-9f72-f0bb10986808" name="Default Changelist" comment="Save session id in commit, fixes auth">
-      <change beforePath="$PROJECT_DIR$/Resources.md" beforeDir="false" afterPath="$PROJECT_DIR$/Resources.md" afterDir="false" />
-    </list>
+    <list default="true" id="1b7d6f6d-aea3-411a-9f72-f0bb10986808" name="Default Changelist" comment="Save session id in commit, fixes auth" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -63,8 +61,8 @@
         <entry file="file://$PROJECT_DIR$/Resources.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="663">
-                <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+              <first_editor relative-caret-position="238">
+                <caret line="14" column="43" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
               </first_editor>
               <second_editor>
                 <markdownNavigatorState />
@@ -73,9 +71,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Procfile">
           <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" selection-start-line="2" selection-end-line="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://C:/Program Files/heroku/client/node_modules/js-yaml/lib/js-yaml/loader.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-12036" />
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -320,7 +334,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="120953000" />
+    <option name="totallyTimeSpent" value="120977000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -426,7 +440,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Save session id in commit, fixes auth" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/pug/examples/dynamicscript.pug" />
     <entry file="file://$PROJECT_DIR$/node_modules/pug/test/examples.test.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/pug/test/output/includes.html" />
     <entry file="file://$PROJECT_DIR$/node_modules/pug/test/output/classes.html" />
@@ -444,11 +457,7 @@
     <entry file="file://$PROJECT_DIR$/public/images/sign-in-with-twitter-gray.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/cliui/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4228" />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/cliui/index.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/cookie-parser/index.js" />
     <entry file="file://$PROJECT_DIR$/testdata/users-sept15.json" />
     <entry file="file://$PROJECT_DIR$/node_modules/bootstrap/scss/bootstrap.scss" />
@@ -458,16 +467,7 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/paginator.js" />
-    <entry file="file://$PROJECT_DIR$/node_modules/pug-parser/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor>
-            <markdownNavigatorState />
-          </second_editor>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/pug-parser/README.md" />
     <entry file="file://$PROJECT_DIR$/routes/unfollow.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -489,30 +489,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/config.js" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="2" selection-end-line="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/response-headers.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="25" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/response-headers.json" />
     <entry file="file://$PROJECT_DIR$/bin/www">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -534,13 +519,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test.js" />
     <entry file="file://$PROJECT_DIR$/views/error.pug">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
@@ -564,8 +543,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-828">
-          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+        <state relative-caret-position="1088">
+          <caret line="64" column="9" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -579,9 +558,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/testdata/mock-users.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/testdata/mock-users.json" />
     <entry file="file://$PROJECT_DIR$/routes/testdata/users-sept15-3.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
@@ -652,8 +629,8 @@
     <entry file="file://$PROJECT_DIR$/Resources.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="663">
-            <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+          <first_editor relative-caret-position="238">
+            <caret line="14" column="43" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
           </first_editor>
           <second_editor>
             <markdownNavigatorState />
@@ -663,6 +640,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Procfile">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://C:/Program Files/heroku/client/node_modules/js-yaml/lib/js-yaml/loader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-12036" />
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
