@@ -25,15 +25,18 @@ body {
     }
 }
 
+@media (max-width: 590px) {
+    img#image-preview{
+        width: 95%;
+    }
+}
+
 @media (max-width: 150px) {
     body{
         margin: 5px;
     }
 }
 
-div#reccs-content{
-    width: 80%;
-}
 
 @media (min-width: 1300px) {
     div#reccs-content{
@@ -61,9 +64,9 @@ img{
     margin-bottom: 1rem;
 }
 
-img#image-preview{
-    width: 95%;
-}
+/*img#image-preview{*/
+    /*width: 50%;*/
+/*}*/
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
     margin-bottom: 1rem;
