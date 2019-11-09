@@ -58,8 +58,16 @@ footer {
     position: absolute;
     left: 0 ; right: 0; bottom: 0;
     height:50px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-style: italic;
+}
+
+footer p{
+    margin-bottom: 0px;
+}
+
+p.read-access{
+    font-size: 0.7rem;
 }
 
 img{
