@@ -35,4 +35,6 @@ https://expressjs.com/en/starter/basic-routing.html
     * Todos https://trello.com/b/skM82nUh/lessnosie
     * Heroku https://dashboard.heroku.com/auth/heroku/callback?code=86445b4c-e004-40f7-9e2a-1ffabfe4f5b7
     * Google Domains https://domains.google.com/m/registrar/
+    * Cloudflare (DNS server) https://dash.cloudflare.com/73f5ec80ff593b62e6c332da589dbe7c/lessnoise.net/dns
+
 
