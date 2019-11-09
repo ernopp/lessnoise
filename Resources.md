@@ -30,11 +30,14 @@ https://expressjs.com/en/starter/basic-routing.html
     * Mozilla guide https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment
 * Heroku
     * Custom domains setup https://devcenter.heroku.com/articles/custom-domains
+    * Configure Cloudflare and Heroku over HTTPS https://support.cloudflare.com/hc/en-us/articles/205893698-Configure-CloudFlare-and-Heroku-over-HTTPS
+
 * Admin
     * Twitter app settings https://apps.twitter.com/app/5573851/settings
     * Todos https://trello.com/b/skM82nUh/lessnosie
     * Heroku https://dashboard.heroku.com/auth/heroku/callback?code=86445b4c-e004-40f7-9e2a-1ffabfe4f5b7
     * Google Domains https://domains.google.com/m/registrar/
     * Cloudflare (DNS server) https://dash.cloudflare.com/73f5ec80ff593b62e6c332da589dbe7c/lessnoise.net/dns
-
+* Debuggging
+    *  `curl -I www.lessnoise.net`
 

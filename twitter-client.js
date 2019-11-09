@@ -6,7 +6,7 @@ const oauth = require('oauth')
 
 const _twitterConsumerKey = process.env.KEY
 const _twitterConsumerSecret = process.env.SECRET
-const callbackString = process.env.NODE_ENV === "production" ? "https://glacial-ravine-68340.herokuapp.com/signin/callback" :
+const callbackString = process.env.NODE_ENV === "production" ? "https://lessnoise.com/signin/callback" :
     "http://localhost:" + process.env.PORT  + "/signin/callback"
 
 debug(callbackString)
