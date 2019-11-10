@@ -23,6 +23,8 @@ https://expressjs.com/en/starter/basic-routing.html
     * Destroy Friendship https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/post-friendships-destroy.html
 * Styling
     * Data tables https://datatables.net/examples/styling/bootstrap4.html & https://github.com/DataTables/DataTables
+    * Meta tags https://css-tricks.com/essential-meta-tags-social-media/
+        * The URL of the image for your object. It should be at least 600x315 pixels, but 1200x630 or larger is preferred (up to 5MB). Stay close to a 1.91:1 aspect ratio to avoid cropping.
 * Deploying / Production
     * Express performance best practices https://expressjs.com/en/advanced/best-practice-performance.html
         * you can use the `--trace-sync-io` command-line flag to print a warning and a stack trace whenever your application uses a synchronous API
@@ -30,6 +32,7 @@ https://expressjs.com/en/starter/basic-routing.html
     * Mozilla guide https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment
 * Heroku
     * Custom domains setup https://devcenter.heroku.com/articles/custom-domains
+        * make sure you set up both www. and the root domain in Heroku
     * Configure Cloudflare and Heroku over HTTPS https://support.cloudflare.com/hc/en-us/articles/205893698-Configure-CloudFlare-and-Heroku-over-HTTPS
 
 * Admin
