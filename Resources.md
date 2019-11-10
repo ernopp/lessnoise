@@ -38,6 +38,7 @@ https://expressjs.com/en/starter/basic-routing.html
     * Heroku https://dashboard.heroku.com/auth/heroku/callback?code=86445b4c-e004-40f7-9e2a-1ffabfe4f5b7
     * Google Domains https://domains.google.com/m/registrar/
     * Cloudflare (DNS server) https://dash.cloudflare.com/73f5ec80ff593b62e6c332da589dbe7c/lessnoise.net/dns
+    * GA https://analytics.google.com/analytics/web/#/report-home/a131357140w214952667p205577433
 * Debuggging
     *  `curl -I www.lessnoise.net`
     * Corrupted node modules locally, run `rm -rf node_modules package-lock.json && npm install && npm start`
