@@ -40,4 +40,6 @@ https://expressjs.com/en/starter/basic-routing.html
     * Cloudflare (DNS server) https://dash.cloudflare.com/73f5ec80ff593b62e6c332da589dbe7c/lessnoise.net/dns
 * Debuggging
     *  `curl -I www.lessnoise.net`
+    * Corrupted node modules locally, run `rm -rf node_modules package-lock.json && npm install && npm start`
+
 

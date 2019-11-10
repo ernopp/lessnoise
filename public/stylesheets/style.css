@@ -38,11 +38,8 @@ body {
     }
 }
 
-
-@media (min-width: 1300px) {
-    div#reccs-content{
-         width: 60%;
-     }
+div#reccs-content {
+    margin-bottom: 20px;
 }
 
 .table{
@@ -57,7 +54,7 @@ table td{
 footer {
     position: absolute;
     left: 0 ; right: 0; bottom: 0;
-    height:50px;
+    height:20px;
     font-size: 0.7rem;
     font-style: italic;
 }
