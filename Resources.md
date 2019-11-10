@@ -25,6 +25,8 @@ https://expressjs.com/en/starter/basic-routing.html
     * Data tables https://datatables.net/examples/styling/bootstrap4.html & https://github.com/DataTables/DataTables
     * Meta tags https://css-tricks.com/essential-meta-tags-social-media/
         * The URL of the image for your object. It should be at least 600x315 pixels, but 1200x630 or larger is preferred (up to 5MB). Stay close to a 1.91:1 aspect ratio to avoid cropping.
+    * Facebook sharing debugger https://developers.facebook.com/tools/debug/sharing/?q=https%3A%2F%2Fwww.lessnoise.net
+    * Twitter card validator https://cards-dev.twitter.com/validator
 * Deploying / Production
     * Express performance best practices https://expressjs.com/en/advanced/best-practice-performance.html
         * you can use the `--trace-sync-io` command-line flag to print a warning and a stack trace whenever your application uses a synchronous API
