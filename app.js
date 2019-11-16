@@ -52,33 +52,17 @@ app.use('/signin', signInRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error("Page not found.")
-    err.status = 404;
-    next(err);
-});
+    err.status = 404
+    next(err)
+})
 
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
+    debug("throwing error to user, err is " + err.message)
+    res.status(err.status || 500)
     res.render('error', {
         message: err.message,
-        error: {}
-    });
-});
+        error: app.get('env') === 'development' ? err : {}
+    })
+})
 
 module.exports = app
