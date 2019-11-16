@@ -23,7 +23,7 @@ block content
                         td
                             img(src=val["image"])
                         td
-                            a(href= baseURL + val["username"]) #{val["username"]}
+                            a(target = "_blank", href= baseURL + val["username"]) #{val["username"]})
                         each v in val["info"]
                             td=v
 
