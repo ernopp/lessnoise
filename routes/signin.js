@@ -35,17 +35,17 @@ router.get('/callback', function(req, res, next){
   verbosedebug("token>>"+req.session.oauthRequestToken)
   verbosedebug("secret>>"+req.session.oauthRequestTokenSecret)
   verbosedebug("oauth_verifier>>"+req.query.oauth_verifier)
-  consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
-    if (error) {
-      // res.send("Error getting OAuth access token : " + inspect(error) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(results) + "]", 500)
-      next(error)
-    } else {
-      req.session.oauthAccessToken = oauthAccessToken
-      req.session.oauthAccessTokenSecret = oauthAccessTokenSecret
-      
-      res.redirect('/')
-    }
-  })
+  try{
+      consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
+          req.session.oauthAccessToken = oauthAccessToken
+          req.session.oauthAccessTokenSecret = oauthAccessTokenSecret
+
+          res.redirect('/')
+      })
+  }
+  catch (err) {
+        next(err)
+  }
 })
 
 module.exports = router
