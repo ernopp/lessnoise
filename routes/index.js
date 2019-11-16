@@ -18,17 +18,18 @@ router.get('/', function (req, res, next) {
             try{
                 let loggedInUser = utils.getLoggedInUser(data)
 
-                debug("----Successfully verified creds----")
-                debug("Twitter user identified  is: " + JSON.stringify((loggedInUser["screen_name"])))
+                debug("New creds verification. Twitter user is: " + JSON.stringify(loggedInUser["screen_name"]))
 
                 let prettyFriendsList = (process.env.USETESTDATA === "true")
                     ? await getTestFriends() : await getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
 
                 if(!prettyFriendsList.error){
+                    debug("Returning recommendations for user: " + JSON.stringify(loggedInUser["screen_name"]))
                     res.render('reccos', {title: '🙏 LessNoise', loggedInUser: loggedInUser, prettyFriendsList: prettyFriendsList.data, baseURL: utils.baseURL})
                 }
                 else{
-                    debug("throwing rate limiting error: " + JSON.stringify(prettyFriendsList.error))
+                    debug("ERROR returning recommendations for user" +  JSON.stringify(loggedInUser["screen_name"]))
+                    debug("error is : " + JSON.stringify(prettyFriendsList.error))
 
                     let e = new Error("Sorry, you've been rate-limited by the Twitter API. Please try again in 15 mins (just reload this page)")
                     e.status = 419
@@ -87,8 +88,6 @@ async function getFriends(accesstoken, accesstokensecret) {
 
     let augmentedFriendsList = utils.augmentFriendsList(rawFriendsList)
     prettyFriendsList.data = utils.getPrettyFriendsList(augmentedFriendsList)
-
-    debug("Finished invocation of getFriends")
 
     return prettyFriendsList
 }
