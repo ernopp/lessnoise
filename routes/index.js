@@ -2,6 +2,7 @@ const consumer = require('../twitter-client')
 const express = require('express')
 const router = express.Router()
 const debug = require('debug')('lessnoise:index')
+const verbosedebug = require('debug')('lessnoise-verbose:index')
 const utils = require('../utils')
 let fs = require('fs')
 
@@ -18,7 +19,7 @@ router.get('/', function (req, res, next) {
                 let loggedInUser = utils.getLoggedInUser(data)
 
                 debug("----Successfully verified creds----")
-                debug("Twitter user identified  is: " + JSON.stringify((loggedInUser["twitterIdentifier"])))
+                debug("Twitter user identified  is: " + JSON.stringify((loggedInUser["screen_name"])))
 
                 let prettyFriendsList = (process.env.USETESTDATA === "true")
                     ? await getTestFriends() : await getFriends(req.session.oauthAccessToken, req.session.oauthAccessTokenSecret)
@@ -54,13 +55,13 @@ async function getFriends(accesstoken, accesstokensecret) {
     let callCount = 0
     let prettyFriendsList = []
 
-    debug("New invocation of getFriends")
+    verbosedebug("New invocation of getFriends")
 
     try {
         // cap at 1000 recommendations - 5 calls of 200 each
         while (nextcursor !== 0 && callCount <= 4) {
-            debug("-----cursoring: callcount is ", callCount)
-            debug("-----rawfriendslist has size ", rawFriendsList.length)
+            verbosedebug("-----cursoring: callcount is ", callCount)
+            verbosedebug("-----rawfriendslist has size ", rawFriendsList.length)
             const twitterResponse = await makeFriendsListCall(
                 nextcursor,
                 accesstoken,
@@ -80,9 +81,9 @@ async function getFriends(accesstoken, accesstokensecret) {
         prettyFriendsList.error = err
     }
 
-    debug("-----Finished cursoring-----")
+    verbosedebug("-----Finished cursoring-----")
 
-    debug("rawFriendsList has size : ", rawFriendsList.length)
+    verbosedebug("rawFriendsList has size : ", rawFriendsList.length)
 
     let augmentedFriendsList = utils.augmentFriendsList(rawFriendsList)
     prettyFriendsList.data = utils.getPrettyFriendsList(augmentedFriendsList)
@@ -101,21 +102,21 @@ function makeFriendsListCall(cursor, oauthAccessToken, oauthAccessTokenSecret) {
             oauthAccessTokenSecret,
             function (error, d, response) {
 
-                debug("response headers from friedns list call: " +JSON.stringify(response.headers))
+                verbosedebug("response headers from friedns list call: " +JSON.stringify(response.headers))
                 let data = JSON.parse(d)
                 if (error) {
                     const e = JSON.stringify(error)
                     debug("Error getting friends, cursor is: " + cursor + " error: " + e)
                     return reject(error)
                 } else {
-                    debug("-------------GOT DATA BACK --------, number of objects: ", data["users"].length)
+                    verbosedebug("-------------GOT DATA BACK --------, number of objects: ", data["users"].length)
 
                     return resolve(data)
                 }
             })
     })
 
-    debug("contents promise are " +JSON.stringify(promise))
+    verbosedebug("contents promise are " +JSON.stringify(promise))
     return promise
 }
 
@@ -136,7 +137,7 @@ async function getTestFriends(){
 
             prettyFriendsList.data = utils.getPrettyFriendsList(transformedFriendsList)
 
-            debug(prettyFriendsList)
+            verbosedebug(prettyFriendsList)
 
             return resolve(prettyFriendsList)
         })

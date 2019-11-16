@@ -78,8 +78,6 @@ const gliu = function getLoggedInUser(data){
         screen_name: verifyCredentialsData["screen_name"]
     }
 
-    debug("loggedInUser is " + JSON.stringify(loggedInUser))
-
     return loggedInUser
 }
 
