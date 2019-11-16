@@ -11,7 +11,7 @@ const utils = require('../utils')
 router.get('/', function(req, res, next){
   consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
     if (error) {
-      debug("error getting oauth request token" + inspect(error))
+      debug("error getting oauth request token" + utils.inspect(error))
       next(error)
       // res.send("Error getting OAuth request token : " + inspect(error), 500)
     } else {  
@@ -37,6 +37,11 @@ router.get('/callback', function(req, res, next){
   verbosedebug("oauth_verifier>>"+req.query.oauth_verifier)
   try{
       consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
+
+          if(error){
+            debug("getoauthaccess token returned with error: " , error)
+          }
+
           req.session.oauthAccessToken = oauthAccessToken
           req.session.oauthAccessTokenSecret = oauthAccessTokenSecret
 
