@@ -32,10 +32,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 console.log("environment is: "+ app.get('env'))
 console.log("usetestdata is: "+ process.env.USETESTDATA)
 
+// https://github.com/expressjs/session#resave
 var sess = {
     secret: process.env.SESSIONSECRET,
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true
 }
 
 if (app.get('env') === 'production') {

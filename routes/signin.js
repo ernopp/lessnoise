@@ -7,16 +7,18 @@ const app = require('../app')
 const debug = require('debug')('lessnoise:signin')
 const verbosedebug = require('debug')('lessnoise-verbose:signin')
 const utils = require('../utils')
+const inspect = require('util-inspect')
 
 router.get('/', function(req, res, next){
   consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
+    req.session.oauthRequestToken = oauthToken
+    req.session.oauthRequestTokenSecret = oauthTokenSecret
+
     if (error) {
-      debug("error getting oauth request token" + utils.inspect(error))
+      debug("error getting oauth request token" + inspect(error))
       next(error)
       // res.send("Error getting OAuth request token : " + inspect(error), 500)
     } else {  
-      req.session.oauthRequestToken = oauthToken
-      req.session.oauthRequestTokenSecret = oauthTokenSecret
       // req.session.save()
       verbosedebug("Calling out to twitter for first oauth")
       verbosedebug("------------------------")
