@@ -1,6 +1,14 @@
 extends layout
 
 block content
+
+  script.
+    ga('send', {
+    hitType: 'event',
+    eventCategory: 'Page view',
+    eventAction: 'Viewed Home Page',
+    });
+
   h1= title
   h3 Unfollow recommendations for your twitter feed.
 

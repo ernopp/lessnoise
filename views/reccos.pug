@@ -1,6 +1,14 @@
 extends layout
 
 block content
+
+    script.
+        ga('send', {
+        hitType: 'event',
+        eventCategory: 'Page view',
+        eventAction: 'Viewed Recco Page',
+        });
+
     h1= title
 
     div#reccs-intro

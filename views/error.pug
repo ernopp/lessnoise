@@ -1,6 +1,14 @@
 extends layout
 
 block content
+
+  script.
+    ga('send', {
+    hitType: 'event',
+    eventCategory: 'Page view',
+    eventAction: 'Viewed Error Page',
+    });
+
   h2= message
   h3= error.status
   pre #{error.stack}
