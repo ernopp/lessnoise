@@ -1,18 +1,9 @@
-/*tr.selected{*/
-    /*background-color:#ff9999*/
-/*}*/
-
-/*p.unfollow{*/
-    /*font-weight: bold;*/
-    /*color:#ff9999*/
-/*}*/
-
 html { height: 100%; }
 
 body {
     margin: 20px;
     min-height:97%;
-    max-width: 900px;
+    max-width: 620px;
     position:relative;
     padding-bottom: 50px;
 }
@@ -67,12 +58,20 @@ p.read-access{
     font-size: 0.7rem;
 }
 
+p.signin{
+    text-align: center;
+}
+
 img{
     margin-bottom: 1rem;
 }
 
+img#signin{
+    width:180px;
+}
+
 div.homepage-image{
-    max-width: 608px;
+    max-width: 600px;
 }
 
 div.caption{
@@ -80,10 +79,6 @@ div.caption{
     font-size: 0.75rem;
     text-align: center;
 }
-
-/*img#image-preview{*/
-    /*width: 50%;*/
-/*}*/
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
     margin-bottom: 1rem;

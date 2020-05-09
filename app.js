@@ -17,7 +17,7 @@ app = express()
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
-https://github.com/expressjs/morgan#morganformat-options
+// https://github.com/expressjs/morgan#morganformat-options
 app.use(logger('dev'))
 
 app.use(express.json())
@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // set up session cookie
 console.log("environment is: "+ app.get('env'))
 console.log("usetestdata is: "+ process.env.USETESTDATA)
+console.log("PORT is: "+ process.env.PORT)
 
 // https://github.com/expressjs/session#resave
 var sess = {
