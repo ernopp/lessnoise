@@ -42,10 +42,10 @@ console.log("environment is: "+ app.get('env'))
 console.log("usetestdata is: "+ process.env.USETESTDATA)
 console.log("PORT is: "+ process.env.PORT)
 
-if (app.get('env') === 'production') {
-    app.set('trust proxy', 1) // trust first proxy
-    // sess.cookie.secure = true // serve secure cookies
-}
+// if (app.get('env') === 'production') {
+//     app.set('trust proxy', 1) // trust first proxy
+//     // sess.cookie.secure = true // serve secure cookies
+// }
 
 //Routes
 app.use('/', indexRouter)
