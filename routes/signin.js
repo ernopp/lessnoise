@@ -19,7 +19,7 @@ router.get('/', function(req, res, next){
       next(error)
       // res.send("Error getting OAuth request token : " + inspect(error), 500)
     } else {  
-      // req.session.save()
+      req.session.save()
       verbosedebug("Calling out to twitter for first oauth")
       verbosedebug("------------------------")
       verbosedebug("Session id is: " + req.sessionID)
