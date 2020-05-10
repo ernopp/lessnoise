@@ -13,6 +13,15 @@ const signInRouter = require('./routes/signin')
 inspect = require('util-inspect') //https://nodejs.org/en/knowledge/getting-started/how-to-use-util-inspect/
 app = express()
 
+// https://github.com/expressjs/session#resave
+var sess = {
+    secret: process.env.SESSIONSECRET,
+    resave: true,
+    saveUninitialized: true
+}
+
+app.use(session(sess))
+
 // View engine Startup & Options
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
@@ -33,19 +42,10 @@ console.log("environment is: "+ app.get('env'))
 console.log("usetestdata is: "+ process.env.USETESTDATA)
 console.log("PORT is: "+ process.env.PORT)
 
-// https://github.com/expressjs/session#resave
-var sess = {
-    secret: process.env.SESSIONSECRET,
-    resave: true,
-    saveUninitialized: true
-}
-
 if (app.get('env') === 'production') {
     app.set('trust proxy', 1) // trust first proxy
     // sess.cookie.secure = true // serve secure cookies
 }
-
-app.use(session(sess))
 
 //Routes
 app.use('/', indexRouter)
