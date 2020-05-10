@@ -16,7 +16,7 @@ app = express()
 // https://github.com/expressjs/session#resave
 var sess = {
     secret: process.env.SESSIONSECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: true
 }
 
