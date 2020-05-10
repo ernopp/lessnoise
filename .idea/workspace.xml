@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b7d6f6d-aea3-411a-9f72-f0bb10986808" name="Default Changelist" comment="Save session id in commit, fixes auth">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/home.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/home.pug" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -70,8 +69,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/home.pug">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="286">
+              <caret line="23" column="165" selection-start-line="23" selection-start-column="165" selection-end-line="23" selection-end-column="165" />
             </state>
           </provider>
         </entry>
@@ -324,7 +323,7 @@
       <workItem from="1575739542489" duration="16000" />
       <workItem from="1580669165462" duration="658000" />
       <workItem from="1589112486585" duration="2399000" />
-      <workItem from="1589117055731" duration="12000" />
+      <workItem from="1589117055731" duration="676000" />
     </task>
     <task id="LOCAL-00001" summary="Save session id in commit, fixes auth">
       <created>1536151743577</created>
@@ -344,7 +343,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147184000" />
+    <option name="totallyTimeSpent" value="147848000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -681,8 +680,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/home.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        <state relative-caret-position="286">
+          <caret line="23" column="165" selection-start-line="23" selection-start-column="165" selection-end-line="23" selection-end-column="165" />
         </state>
       </provider>
     </entry>
